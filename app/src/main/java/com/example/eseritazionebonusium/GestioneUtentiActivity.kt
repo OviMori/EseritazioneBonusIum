@@ -25,6 +25,7 @@ class GestioneUtentiActivity : AppCompatActivity() {
         setContentView(R.layout.activity_gestisci_utenti)
 
         listKeys = HashMap<String, String>()
+
         getAllKeysSharedPreferences()
         binding = DataBindingUtil.setContentView(this, R.layout.activity_gestisci_utenti)
 
@@ -32,7 +33,7 @@ class GestioneUtentiActivity : AppCompatActivity() {
         mRecyclerView.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(this)
         val listaToList :List<Pair<String, String>>  = listKeys.toList()
-        mAdapter = CustomAdapter(listaToList)
+        mAdapter = CustomAdapter(listaToList, getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE))
         mRecyclerView.layoutManager = mLayoutManager
         mRecyclerView.adapter = mAdapter
 

@@ -12,7 +12,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.RecyclerView
 
-class CustomAdapter(private val listaUtenti: List<Pair<String, String>>) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
+class CustomAdapter(private var listaUtenti: List<Pair<String, String>>, private var sharePref : SharedPreferences) : RecyclerView.Adapter<CustomAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -22,6 +22,7 @@ class CustomAdapter(private val listaUtenti: List<Pair<String, String>>) : Recyc
 
         lateinit var mImageResourceIcon : ImageView
         lateinit var mText : TextView
+        lateinit var mTextForDeleting : TextView
         lateinit var mButton : AppCompatButton
 
         init {
@@ -53,13 +54,25 @@ class CustomAdapter(private val listaUtenti: List<Pair<String, String>>) : Recyc
 
         viewHolder.mText.setText(utente.username)
 
-        viewHolder.mButton.setOnClickListener{
-            var elementoDaEliminare : Pair<String, String> = listaUtenti.get(position)
+        viewHolder.mButton.setOnClickListener {
+            var elementoDaEliminare: Pair<String, String> = listaUtenti.get(position)
             Log.i("elemento selezionato key", elementoDaEliminare.first)
             Log.i("elemento selezionato value", elementoDaEliminare.second)
 
+            cancellaUtente(elementoDaEliminare)
+            notifyDataSetChanged()
 
         }
+    }
+
+    fun cancellaUtente(elementoDaEliminare : Pair<String, String>){
+        var edit : SharedPreferences.Editor = sharePref.edit()
+
+        if(sharePref.contains(elementoDaEliminare.first)){
+            edit.remove(elementoDaEliminare.first).apply()
+        }
+
+        listaUtenti = sharePref.all.toList() as List<Pair<String, String>>
     }
 
 

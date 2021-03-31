@@ -61,6 +61,12 @@
                 android:textStyle="bold"
                 android:text="Gestisci utenti"/>
 
+            <TextView
+                android:id="@+id/elemento_da_cancellare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
         </LinearLayout>
 
 
