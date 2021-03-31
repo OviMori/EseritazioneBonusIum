@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">App Bonus</string>
+    <string name="accedi">Accedi</string>
+    <string name="nuovo_utente_registrati">Nuovo utente? Registrati</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="error_messagge_not_equals_password">Inserisci la stessa password</string>
+    <string name="error_messagge_wrong_username">Username errato</string>
+    <string name="error_messagge_wrong_password">Password errata</string>
+    <string name="registrati">Registrati</string>
+
+    <string name="UTENTE_CORRENTE">UTENTE_CORRENTE</string>
+    <string name="INFO_UTENTI">INFO_UTENTi</string>
+    <string name="SET_UTENTI">SET_UTENTI</string>
+
+</resources>
