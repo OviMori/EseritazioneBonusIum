@@ -4,6 +4,7 @@ import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -23,8 +24,10 @@ class HomeActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
 
-        val intent : Intent = Intent()
+        val intent = getIntent()
         val isAnAdmin : Int = intent.getIntExtra("ISANADMIN", 0)
+
+        Log.i("Value of ISANADMIN**************", ""+isAnAdmin)
 
         if(isAnAdmin == 1){
             //mostra layout admin

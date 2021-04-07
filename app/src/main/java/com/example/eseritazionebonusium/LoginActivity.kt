@@ -79,8 +79,10 @@ class LoginActivity : AppCompatActivity() {
 
         if(isAnAdmin == 1){
             toHomeIntent.putExtra("ISANADMIN", 1)
+            Log.i("Status SI Admin::::::::::", ""+this.isAnAdmin )
         }else{
             toHomeIntent.putExtra("ISANADMIN", 0)
+            Log.i("Status NO Admin::::::::::", ""+this.isAnAdmin )
         }
         startActivity(toHomeIntent)
         finish()

@@ -34,6 +34,14 @@ class CustomAdapter(private var listaUtenti: List<Pair<String, String>>, private
         }
     }
 
+    object Foo {
+        @JvmStatic var counter: Int = 0
+
+        fun set(value : Int){
+            counter += value
+        }
+    }
+
 
     // Create new views (invoked by the layout manager)
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
@@ -50,29 +58,64 @@ class CustomAdapter(private var listaUtenti: List<Pair<String, String>>, private
         // contents of the view with that element
         val strUtenteInfo : String = listaUtenti.get(position).second
         val utente = Utente()
+        val initUtente: Utente = Utente()
         utente.creaNuovoUtenteDaStringa(strUtenteInfo)
 
         viewHolder.mText.setText(utente.username)
 
-        viewHolder.mButton.setOnClickListener {
-            var elementoDaEliminare: Pair<String, String> = listaUtenti.get(position)
-            Log.i("elemento selezionato key", elementoDaEliminare.first)
-            Log.i("elemento selezionato value", elementoDaEliminare.second)
+        if(Foo.counter <= listaUtenti.size){
+            val initUtenteString: String = listaUtenti.get(Foo.counter).second
+            initUtente.creaNuovoUtenteDaStringa(initUtenteString)
 
-            cancellaUtente(elementoDaEliminare)
+            if(initUtente.admin == 1){
+                viewHolder.mButton.setText("Admin")
+            }else{
+                viewHolder.mButton.setText("Imposta Admin")
+            }
+        }
+
+
+        viewHolder.mButton.setOnClickListener {
+            var utenteDaModificare: Pair<String, String> = listaUtenti.get(position)
+            Log.i("elemento selezionato key", utenteDaModificare.first)
+            Log.i("elemento selezionato value", utenteDaModificare.second)
+
+            val utenteModificato: Utente = modificaStatusUtente(utenteDaModificare)
+
+            if(utenteModificato.admin == 1){
+                viewHolder.mButton.setText("Admin")
+            }else{
+                viewHolder.mButton.setText("Imposta Admin")
+            }
+
             notifyDataSetChanged()
 
         }
     }
 
-    fun cancellaUtente(elementoDaEliminare : Pair<String, String>){
+    fun modificaStatusUtente(utenteDaModificare : Pair<String, String>) : Utente{
         var edit : SharedPreferences.Editor = sharePref.edit()
+        val utenteTemp = Utente()
 
-        if(sharePref.contains(elementoDaEliminare.first)){
-            edit.remove(elementoDaEliminare.first).apply()
+        if(sharePref.contains(utenteDaModificare.first)){
+
+            utenteTemp.creaNuovoUtenteDaStringa(utenteDaModificare.second)
+
+            if(utenteTemp.admin == 1){
+                utenteTemp.admin = 0
+            }else{
+                utenteTemp.admin = 1
+            }
+
+            val utenteModificato: String = utenteTemp.toString()
+
+            edit.putString(utenteDaModificare.first, utenteModificato)  //aggiorno i valori della lista sharedPreferences
+
         }
 
         listaUtenti = sharePref.all.toList() as List<Pair<String, String>>
+
+        return utenteTemp
     }
 
 

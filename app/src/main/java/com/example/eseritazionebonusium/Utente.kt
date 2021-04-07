@@ -24,6 +24,8 @@ data class Utente(
 
         if(strArrUtente[5] == "1"){
             this.admin = 1
+        }else{
+            this.admin = 0
         }
     }
 
