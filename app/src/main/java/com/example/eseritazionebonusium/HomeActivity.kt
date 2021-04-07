@@ -1,8 +1,10 @@
 package com.example.eseritazionebonusium
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.adapters.TextViewBindingAdapter.setText
@@ -19,6 +21,20 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
+
+
+        val intent : Intent = Intent()
+        val isAnAdmin : Int = intent.getIntExtra("ISANADMIN", 0)
+
+        if(isAnAdmin == 1){
+            //mostra layout admin
+            binding.adminIconLayout.visibility = View.VISIBLE
+            binding.gestisciUtentiButton.visibility = View.VISIBLE
+        }else{
+            //nascondi layout admin
+            binding.adminIconLayout.visibility = View.GONE
+            binding.gestisciUtentiButton.visibility = View.GONE
+        }
         setDatiUtenteCorrente()
 
         binding.gestisciUtentiButton.setOnClickListener{
