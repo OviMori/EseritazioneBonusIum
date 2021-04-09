@@ -20,6 +20,14 @@ object DataRepository {
         sharPrefMyUser = context.getSharedPreferences(MY_SHARED_PREF_UTENTE_CORRENTE, Context.MODE_PRIVATE)
     }
 
+    fun dropUser(username : String) : Boolean{
+        if(sharPrefUsers.contains(username)){
+            sharPrefUsers.edit().remove(username)
+            return true
+        }
+        return false
+    }
+
     fun getUsersList() : Map<String, String>{
         return sharPrefUsers.all as Map<String, String>
     }

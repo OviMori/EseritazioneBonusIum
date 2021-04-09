@@ -9,6 +9,7 @@
         xmlns:tools="http://schemas.android.com/tools">
 
         <EditText
+            android:id="@+id/search_box"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -16,7 +17,9 @@
             android:background="@drawable/edit_text_style"
             android:drawableLeft="@drawable/ic_baseline_search_24"
             android:gravity="left"
-            android:hint="Searh user..."/>
+            android:imeOptions="actionDone"
+            android:hint="Search user..."/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

@@ -6,6 +6,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.provider.ContactsContract
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.eseritazionebonusium.databinding.ActivityModificaPasswordBinding
@@ -41,7 +43,13 @@ class ModificaPasswordActivity : AppCompatActivity() {
     }
 
     fun aggiornaDatiUtente( newPassword : String){
-        DataRepository.salvaCambioPassword(newPassword)
+        val currentUser = DataRepository.getCurrentUser()
+
+        if(!currentUser.username.equals("admin")){  //if is not the admin account
+            DataRepository.salvaCambioPassword(newPassword)
+        }else{
+            Toast.makeText(this, "Cannot modify admin credential", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun verificaUguaglianzaPasswordInserite(password : String, confermaPassword : String) : Boolean{
