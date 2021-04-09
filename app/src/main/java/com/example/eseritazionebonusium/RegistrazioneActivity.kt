@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -44,7 +45,9 @@ class RegistrazioneActivity : AppCompatActivity() {
 
 
             if(verificaUguaglianzaPasswordInserite(newPassword, newConfermaPassword)){
+
                 var newUtente : Utente? = verificaCredenziali(newUsername, newPassword, newCitta, newDataNascita)
+
                 if(newUtente != null){
                     salvaCredenziali(newUtente)
                     Toast.makeText(this, "Salvataggio account...", Toast.LENGTH_SHORT).show()
@@ -81,11 +84,13 @@ class RegistrazioneActivity : AppCompatActivity() {
     }
 
     private fun verificaCredenziali(username: String, password: String,  citta: String,  dataNascita: String) : Utente?{
-        var loginPref : SharedPreferences = getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE)
-        val exist: String = loginPref.getString(username, "") as String
+        val utente = DataRepository.getUser(username)
 
+        if(utente.username.equals("admin")){    //can not create user with "admin" username
+            return null
+        }
 
-        if (!exist.equals("")){
+        if (!utente.username.equals("")){   //if username already exist
             binding.registrazioneUsernameEdit.setError("Questo username e' gia utilizzato da un altro account!")
             return null;
         }else{
@@ -98,14 +103,8 @@ class RegistrazioneActivity : AppCompatActivity() {
      * @arrayCredenziali array che puo essere o di username o di password
      * @macroTipoCredenziali indica se l array contiene serie di username o di password
      */
-    @SuppressLint("CommitPrefEdits")
     private fun salvaCredenziali(newUtente : Utente){
-
-        var logInPref : SharedPreferences = getSharedPreferences(R.string.INFO_UTENTI.toString(), Context.MODE_PRIVATE)
-        var edit : SharedPreferences.Editor = logInPref.edit()
-
-        edit.putString(newUtente.username, newUtente.toString()).apply()
-
+        DataRepository.salvaUtente(newUtente)
     }
 
 }

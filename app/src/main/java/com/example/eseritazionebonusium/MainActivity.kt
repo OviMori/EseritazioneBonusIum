@@ -20,27 +20,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verifyAdminAccount(){
-        if(!adminExist()){
-            createAdminAccount()
+        if(!DataRepository.adminExist()){   //if admin does not exist
+            DataRepository.createAdminAccount()
         }
-    }
-
-    private fun adminExist() : Boolean{
-        var sharedPref : SharedPreferences = getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE)
-        if(sharedPref.getString("admin", "") == ""){
-            return false
-        }
-        return true
-    }
-
-    private fun createAdminAccount(){
-        var sharedPref : SharedPreferences = getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE)
-        var editSharedPref : SharedPreferences.Editor = sharedPref.edit()
-
-        var utenteAdmin = Utente("admin", "admin", "admin", "", false, 1)
-
-        editSharedPref.putString("admin", utenteAdmin.toString()).apply()
-
     }
 }
 

@@ -22,7 +22,6 @@ class CustomAdapter(private var listaUtenti: List<Pair<String, String>>, private
 
         lateinit var mImageResourceIcon : ImageView
         lateinit var mText : TextView
-        lateinit var mTextForDeleting : TextView
         lateinit var mButton : AppCompatButton
 
         init {
@@ -30,15 +29,6 @@ class CustomAdapter(private var listaUtenti: List<Pair<String, String>>, private
             mImageResourceIcon = view.findViewById(R.id.utente_icon)
             mText = view.findViewById(R.id.utente_textview_row)
             mButton = view.findViewById(R.id.utente_row_button)
-
-        }
-    }
-
-    object Foo {
-        @JvmStatic var counter: Int = 0
-
-        fun set(value : Int){
-            counter += value
         }
     }
 
@@ -56,44 +46,75 @@ class CustomAdapter(private var listaUtenti: List<Pair<String, String>>, private
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        val strUtenteInfo : String = listaUtenti.get(position).second
+
+        val stringaDatiUtente = listaUtenti.get(position).second
         val utente = Utente()
-        val initUtente: Utente = Utente()
-        utente.creaNuovoUtenteDaStringa(strUtenteInfo)
+        utente.creaNuovoUtenteDaStringa(stringaDatiUtente)
 
-        viewHolder.mText.setText(utente.username)
+        viewHolder.mText.text = utente.username
 
-        if(Foo.counter <= listaUtenti.size){
-            val initUtenteString: String = listaUtenti.get(Foo.counter).second
-            initUtente.creaNuovoUtenteDaStringa(initUtenteString)
+        var strUser: Pair<String, String> = listaUtenti.get(position)
+        val user : Utente = Utente()
+        user.creaNuovoUtenteDaStringa(strUser.second)
 
-            if(initUtente.admin == 1){
-                viewHolder.mButton.setText("Admin")
-            }else{
-                viewHolder.mButton.setText("Imposta Admin")
-            }
+        Log.i("viewHolder Stampa Dati utente ", user.toString())
+        if(user.admin == 1){
+            viewHolder.mButton.text = "Admin"
         }
 
+
+        viewHolder.mImageResourceIcon.setOnClickListener{
+            var utenteDaModificare: Pair<String, String> = listaUtenti.get(position)
+
+            cancellaUtente(utenteDaModificare)
+            notifyDataSetChanged()
+        }
 
         viewHolder.mButton.setOnClickListener {
             var utenteDaModificare: Pair<String, String> = listaUtenti.get(position)
             Log.i("elemento selezionato key", utenteDaModificare.first)
             Log.i("elemento selezionato value", utenteDaModificare.second)
 
-            val utenteModificato: Utente = modificaStatusUtente(utenteDaModificare)
+            val utenteModificato: Utente? = modificaStatusUtente(utenteDaModificare)
 
-            if(utenteModificato.admin == 1){
-                viewHolder.mButton.setText("Admin")
-            }else{
-                viewHolder.mButton.setText("Imposta Admin")
+            if(utenteModificato != null){
+                if(viewHolder.mButton.text.equals("Imposta Admin")){
+                    viewHolder.mButton.setText("Admin")
+                }else{
+                    viewHolder.mButton.setText("Imposta Admin")
+                }
+
+                listaUtenti = DataRepository.getUsersList() as List<Pair<String, String>>
+                notifyDataSetChanged()
             }
 
-            notifyDataSetChanged()
+        }
 
+
+    }
+
+    fun modificaStatusUtente(utenteDaModificare : Pair<String, String>) : Utente?{
+        val selectedUser = Utente()
+        selectedUser.creaNuovoUtenteDaStringa(utenteDaModificare.second)
+        val userFromSharedPref : Utente
+
+        if(DataRepository.userExist(selectedUser.username)){
+            userFromSharedPref = DataRepository.getUser(selectedUser.username)
+
+            if(userFromSharedPref.admin == 0){
+                userFromSharedPref.admin = 1
+            }else{
+                userFromSharedPref.admin = 0
+            }
+
+            DataRepository.salvaUtente(userFromSharedPref)  //overrite user data
+            return userFromSharedPref
+        }else{
+            return null
         }
     }
 
-    fun modificaStatusUtente(utenteDaModificare : Pair<String, String>) : Utente{
+    /*fun modificaStatusUtente(utenteDaModificare : Pair<String, String>) : Utente{
         var edit : SharedPreferences.Editor = sharePref.edit()
         val utenteTemp = Utente()
 
@@ -113,9 +134,28 @@ class CustomAdapter(private var listaUtenti: List<Pair<String, String>>, private
 
         }
 
+        for(s in listaUtenti){
+            Log.i("&&&&&&&&&&&&&&&&&&      ", s.second)
+        }
+
         listaUtenti = sharePref.all.toList() as List<Pair<String, String>>
 
+
+        for(s in listaUtenti){
+            Log.i("&&&&&&&&&&&&&&&&&&      ", s.second)
+        }
+
         return utenteTemp
+    }*/
+
+    fun cancellaUtente(elementoDaEliminare : Pair<String, String>){
+        var edit : SharedPreferences.Editor = sharePref.edit()
+
+        if(sharePref.contains(elementoDaEliminare.first)){
+            edit.remove(elementoDaEliminare.first).apply()
+        }
+
+        listaUtenti = sharePref.all.toList() as List<Pair<String, String>>
     }
 
 

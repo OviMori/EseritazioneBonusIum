@@ -22,8 +22,6 @@ class HomeActivity : AppCompatActivity() {
         setContentView(R.layout.activity_home)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-
-
         val intent = getIntent()
         val isAnAdmin : Int = intent.getIntExtra("ISANADMIN", 0)
 
@@ -38,6 +36,7 @@ class HomeActivity : AppCompatActivity() {
             binding.adminIconLayout.visibility = View.GONE
             binding.gestisciUtentiButton.visibility = View.GONE
         }
+
         setDatiUtenteCorrente()
 
         binding.gestisciUtentiButton.setOnClickListener{
@@ -62,16 +61,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setDatiUtenteCorrente(){
-        val sharedPref = getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE)
-        val datiUtenteCorrenteString : String = sharedPref.getString(R.string.UTENTE_CORRENTE.toString(), "").toString()
+        val currentUser = DataRepository.getCurrentUser()
 
-        val utenteCorrente = Utente()
-        utenteCorrente.creaNuovoUtenteDaStringa(datiUtenteCorrenteString)
+        Log.i("UtenteCorrente:::::::::::::::::::", ""+currentUser.toString())
 
-        binding.homeUsername.setText(utenteCorrente.username)
-        binding.homePassword.setText(utenteCorrente.password)
-        binding.homeCitta.setText(utenteCorrente.citta)
-        binding.homeDataNascita.setText(utenteCorrente.dataNascita)
-
+        binding.homeUsername.setText(currentUser.username)
+        binding.homePassword.setText(currentUser.password)
+        binding.homeCitta.setText(currentUser.citta)
+        binding.homeDataNascita.setText(currentUser.dataNascita)
     }
 }

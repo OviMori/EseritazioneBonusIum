@@ -38,37 +38,32 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun verificaCredenziali(username: String, password: String) : Boolean{
-        var loginPref : SharedPreferences = getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE)
-        val exist: String = loginPref.getString(username, "") as String
+        val userExist = DataRepository.getUser(username)
 
-        if (!exist.equals("")){
-
-            val tmpUtente = Utente()
-            tmpUtente.creaNuovoUtenteDaStringa(exist)    //creiamo un nuovo utente e lo popoliamo con le info salvate come sharedPreferences
-
-            if(tmpUtente.password.equals(password)){
-                salvaUtenteCorrente(tmpUtente)
+        if (!userExist.username.equals("")){    //if user exixst
+            if(userExist.password.equals(password)){    //if password is equal to saved login
+                DataRepository.salvaUtenteCorrente(userExist)  //save current user in sharedPreferences
+                saveStatusIfAdmin(userExist)
                 return true;
+
+            }else{ //if pawwsord is wrong
+                binding.passwordEdit.setError("Password errata!")
             }
-        }else{
-            //binding.usernameEdit.setError("Questo account non esiste!")
+
+        }else{  //if user does not exist
+            binding.usernameEdit.setError("Questo account non esiste!")
             return false
         }
         return false
     }
 
-    private fun salvaUtenteCorrente(utenteCorrente : Utente){
-        var logInPref : SharedPreferences = getSharedPreferences(R.string.INFO_UTENTI.toString(), Context.MODE_PRIVATE)
-        var edit : SharedPreferences.Editor = logInPref.edit()
 
-        edit.putString(R.string.UTENTE_CORRENTE.toString(), utenteCorrente.toString()).apply()
-        salvaStatusAdmin(utenteCorrente)
 
-    }
-
-    private fun salvaStatusAdmin(utente : Utente){
+    private fun saveStatusIfAdmin(utente : Utente){
         if(utente.admin == 1){
             isAnAdmin = 1
+        }else{
+            isAnAdmin = 0
         }
     }
 

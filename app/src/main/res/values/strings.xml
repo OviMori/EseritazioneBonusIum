@@ -8,8 +8,5 @@
     <string name="error_messagge_wrong_password">Password errata</string>
     <string name="registrati">Registrati</string>
 
-    <string name="UTENTE_CORRENTE">UTENTE_CORRENTE</string>
-    <string name="INFO_UTENTI">INFO_UTENTi</string>
-    <string name="SET_UTENTI">SET_UTENTI</string>
 
 </resources>

@@ -14,8 +14,6 @@ class ModificaPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityModificaPasswordBinding
 
-    private lateinit var utenteCorrenteGlobale : Utente
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modifica_password)
@@ -35,32 +33,15 @@ class ModificaPasswordActivity : AppCompatActivity() {
             val newPasswordConferma : String = binding.passwordConfermaEdit.text.toString()
 
             if(verificaUguaglianzaPasswordInserite(newPassword, newPasswordConferma)){
-                aggiornaDatiUtente(utenteCorrenteGlobale, newPassword)
-                binding.modificaPasswordPasswordCorrente.setText(newPassword)
+                aggiornaDatiUtente(newPassword)
+                setDatiUtenteCorrente()
             }
         }
 
     }
 
-    fun aggiornaDatiUtente(utenteCorrenteGlobale : Utente, newPassword : String){
-        utenteCorrenteGlobale.password = newPassword
-        salvaCredenziali(utenteCorrenteGlobale)
-    }
-
-    /**
-     * @arrayCredenziali array che puo essere o di username o di password
-     * @macroTipoCredenziali indica se l array contiene serie di username o di password
-     */
-    @SuppressLint("CommitPrefEdits")
-    private fun salvaCredenziali(newUtente : Utente){
-
-        var logInPref : SharedPreferences = getSharedPreferences(R.string.INFO_UTENTI.toString(), Context.MODE_PRIVATE)
-        var edit : SharedPreferences.Editor = logInPref.edit()
-
-        edit.putString(newUtente.username, newUtente.toString()).apply()
-        edit.putString(R.string.UTENTE_CORRENTE.toString(), newUtente.toString()).apply()
-
-
+    fun aggiornaDatiUtente( newPassword : String){
+        DataRepository.salvaCambioPassword(newPassword)
     }
 
     private fun verificaUguaglianzaPasswordInserite(password : String, confermaPassword : String) : Boolean{
@@ -73,12 +54,7 @@ class ModificaPasswordActivity : AppCompatActivity() {
     }
 
     private fun setDatiUtenteCorrente(){
-        val sharedPref = getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE)
-        val datiUtenteCorrenteString : String = sharedPref.getString(R.string.UTENTE_CORRENTE.toString(), "").toString()
-
-        val utenteCorrente = Utente()
-        utenteCorrente.creaNuovoUtenteDaStringa(datiUtenteCorrenteString)
-        utenteCorrenteGlobale = utenteCorrente
+        val utenteCorrente = DataRepository.getCurrentUser()
 
         binding.modificaPasswordUsernameCorrente.setText(utenteCorrente.username)
         binding.modificaPasswordPasswordCorrente.setText(utenteCorrente.password)

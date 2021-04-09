@@ -33,25 +33,21 @@ class GestioneUtentiActivity : AppCompatActivity() {
         mRecyclerView.setHasFixedSize(true)
         mLayoutManager = LinearLayoutManager(this)
         val listaToList :List<Pair<String, String>>  = listKeys.toList()
-        mAdapter = CustomAdapter(listaToList, getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE))
+        mAdapter = CustomAdapter(listaToList, DataRepository.getSharedPref())
         mRecyclerView.layoutManager = mLayoutManager
         mRecyclerView.adapter = mAdapter
-
-
-
-
-
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val logoutIntent : Intent = Intent(this, HomeActivity::class.java)
-        startActivity(logoutIntent)
+        val homeActivityIntent : Intent = Intent(this, HomeActivity::class.java)
+        homeActivityIntent.putExtra("ISANADMIN", 1)
+        startActivity(homeActivityIntent)
         finish()
     }
 
     private fun getAllKeysSharedPreferences(){
-        val sharedPref = getSharedPreferences(R.string.INFO_UTENTI.toString(), MODE_PRIVATE)
-        listKeys = sharedPref.all as HashMap<String, String>
+
+        listKeys = DataRepository.getUsersList()
     }
 }
