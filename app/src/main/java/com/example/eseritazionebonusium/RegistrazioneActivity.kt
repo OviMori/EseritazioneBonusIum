@@ -2,17 +2,13 @@ package com.example.eseritazionebonusium
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.eseritazionebonusium.databinding.ActivityRegistrazioneBinding
 import java.util.*
-import kotlin.collections.HashSet
 
 class RegistrazioneActivity : AppCompatActivity() {
 
@@ -44,19 +40,35 @@ class RegistrazioneActivity : AppCompatActivity() {
 
 
 
-            if(verificaUguaglianzaPasswordInserite(newPassword, newConfermaPassword)){
+            if(checkMinInput(newUsername, newPassword)){
+                if(verificaUguaglianzaPasswordInserite(newPassword, newConfermaPassword)){
 
-                var newUtente : Utente? = verificaCredenziali(newUsername, newPassword, newCitta, newDataNascita)
+                    var newUser : User? = verificaCredenziali(newUsername, newPassword, newCitta, newDataNascita)
 
-                if(newUtente != null){
-                    salvaCredenziali(newUtente)
-                    Toast.makeText(this, "Salvataggio account...", Toast.LENGTH_SHORT).show()
-                    val toLoginActivity = Intent(this, LoginActivity::class.java)
-                    startActivity(toLoginActivity)
-                    finish()
+                    if(newUser != null){
+                        salvaCredenziali(newUser)
+                        Toast.makeText(this, "Salvataggio account...", Toast.LENGTH_SHORT).show()
+                        val toLoginActivity = Intent(this, LoginActivity::class.java)
+                        startActivity(toLoginActivity)
+                        finish()
+                    }
                 }
             }
+
         }
+    }
+
+    fun checkMinInput(newUsername: String, newPassword: String) : Boolean{
+        if(newUsername.trim().isBlank()){
+            binding.registrazioneUsernameEdit.setError("Name cannot be blank! ")
+            return false
+        }
+
+        if(newPassword.trim().isBlank()){
+            binding.registrazionePasswordEdit.setError("Password cannot be blank! ")
+            return false
+        }
+        return true
     }
 
     @SuppressLint("SetTextI18n")
@@ -83,7 +95,7 @@ class RegistrazioneActivity : AppCompatActivity() {
         }
     }
 
-    private fun verificaCredenziali(username: String, password: String,  citta: String,  dataNascita: String) : Utente?{
+    private fun verificaCredenziali(username: String, password: String,  citta: String,  dataNascita: String) : User?{
         val utente = DataRepository.getUser(username)
 
         if(utente.username.equals("admin")){    //can not create user with "admin" username
@@ -94,7 +106,7 @@ class RegistrazioneActivity : AppCompatActivity() {
             binding.registrazioneUsernameEdit.setError("Questo username e' gia utilizzato da un altro account!")
             return null;
         }else{
-            val createUtente = Utente(username, password, citta, dataNascita)
+            val createUtente = User(username, password, citta, dataNascita)
             return createUtente
         }
     }
@@ -103,8 +115,8 @@ class RegistrazioneActivity : AppCompatActivity() {
      * @arrayCredenziali array che puo essere o di username o di password
      * @macroTipoCredenziali indica se l array contiene serie di username o di password
      */
-    private fun salvaCredenziali(newUtente : Utente){
-        DataRepository.salvaUtente(newUtente)
+    private fun salvaCredenziali(newUser : User){
+        DataRepository.salvaUtente(newUser)
     }
 
 }

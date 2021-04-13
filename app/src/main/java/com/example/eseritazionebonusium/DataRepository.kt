@@ -1,10 +1,8 @@
 package com.example.eseritazionebonusium
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
 
 object DataRepository {
     private const val MY_SHARED_PREF_UTENTI = "INFO_UTENTI"
@@ -20,16 +18,47 @@ object DataRepository {
         sharPrefMyUser = context.getSharedPreferences(MY_SHARED_PREF_UTENTE_CORRENTE, Context.MODE_PRIVATE)
     }
 
-    fun dropUser(username : String) : Boolean{
-        if(sharPrefUsers.contains(username)){
-            sharPrefUsers.edit().remove(username)
+    fun removeAllAccounts(){
+        sharPrefUsers.edit().clear().apply()
+    }
+
+    fun isAdmin(user: User): Boolean{
+        if(user.admin == 1){
             return true
         }
         return false
     }
 
-    fun getUsersList() : Map<String, String>{
-        return sharPrefUsers.all as Map<String, String>
+    fun isAdmin(strUser: String): Boolean{
+        val user = User()
+        user.creaNuovoUtenteDaStringa(strUser)
+
+        if(user.admin == 1){
+            return true
+        }
+        return false
+    }
+
+    fun dropUser(user: User) : Boolean{
+        if(sharPrefUsers.contains(user.username)){
+            sharPrefUsers.edit().remove(user.username).apply()
+            return true
+        }
+        return false
+    }
+
+    fun getUsersList() : List<User>{
+        val userList: ArrayList<User> = ArrayList()
+        val userListFromPreferences: Map<String, *> = sharPrefUsers.all
+
+
+        for(user in userListFromPreferences){
+            val tempUser = User()
+            tempUser.creaNuovoUtenteDaStringa(user.value.toString())   //create new user
+            userList.add(tempUser)
+        }
+
+        return userList
     }
 
     fun getSharedPref() : SharedPreferences{
@@ -46,25 +75,25 @@ object DataRepository {
     }
 
     fun userExist(username : String) : Boolean{
-        var tempAdmin = sharPrefUsers.getString(username, "")
+        val tempAdmin = sharPrefUsers.getString(username, "")
         if(tempAdmin.equals("")){   //if admin does not exist
             return false
         }
         return true
     }
 
-    fun salvaUtenteCorrente(currentUser : Utente){
+    fun salvaUtenteCorrente(currentUser : User){
         Log.i("salvataggio Utente  corrente ", currentUser.toString())
         sharPrefMyUser.edit().putString(UTENTE_CORRENTE_KEY, currentUser.toString()).apply()
     }
 
-    fun salvaUtente(newUtente : Utente){
-        salvaCredenziali(newUtente)
+    fun salvaUtente(newUser : User){
+        salvaCredenziali(newUser)
     }
 
-    fun getCurrentUser() : Utente{
+    fun getCurrentUser() : User{
         val strCurrentUser = sharPrefMyUser.getString(UTENTE_CORRENTE_KEY, "") as String
-        val currentUser = Utente()
+        val currentUser = User()
         Log.i("recupero Utente  corrente ", ""+strCurrentUser)
 
         if(!strCurrentUser.equals("")){
@@ -73,8 +102,8 @@ object DataRepository {
         return currentUser
     }
 
-    fun getUser(username : String) : Utente{
-        val userGeneratedFromString = Utente()
+    fun getUser(username : String) : User{
+        val userGeneratedFromString = User()
         val utenteInString : String = sharPrefUsers.getString(username, "") as String
 
         Log.i("Username passed ", username)
@@ -87,21 +116,21 @@ object DataRepository {
     }
 
     fun createAdminAccount(){
-        var utenteAdmin = Utente("admin", "admin", "admin", "", false, 1)
+        val utenteAdmin = User("admin", "admin", "admin", "", false, 1)
         salvaCredenziali(utenteAdmin)
     }
 
     fun adminExist() : Boolean{
-        var tempAdmin = sharPrefUsers.getString("admin", "")
+        val tempAdmin = sharPrefUsers.getString("admin", "")
         if(tempAdmin.equals("")){   //if admin does not exist
             return false
         }
         return true
     }
 
-    private fun salvaCredenziali(newUtente : Utente){
-        Log.i("InfoUtenteRegistrato", newUtente.toString())
-        sharPrefUsers.edit().putString(newUtente.username, newUtente.toString()).apply()
+    private fun salvaCredenziali(newUser : User){
+        Log.i("InfoUtenteRegistrato", newUser.toString())
+        sharPrefUsers.edit().putString(newUser.username, newUser.toString()).apply()
     }
 
 

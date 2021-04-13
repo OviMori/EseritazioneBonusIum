@@ -9,8 +9,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp">
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp">
 
 
             <TextView
@@ -43,7 +43,7 @@
                     android:id="@+id/admin_icon_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:gravity="right"
+                    android:gravity="end"
                     android:orientation="horizontal"
                     android:visibility="visible">
 
@@ -51,7 +51,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
+                        android:gravity="end"
                         android:layout_gravity="center"
                         android:text="Admin"
                         android:textSize="20dp"
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
                 android:orientation="vertical"
-                android:gravity="left">
+                android:gravity="start">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -82,10 +82,10 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:elegantTextHeight="true"
-                    android:text="I tuoi dati: "
+                    android:text="@string/i_tuoi_dati"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -95,13 +95,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="left"
+                        android:gravity="start"
                         android:ems="7"
                         android:layout_marginTop="10dp"
                         android:elegantTextHeight="true"
-                        android:text="Username: "
+                        android:text="@string/username"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/home_username"
@@ -111,7 +111,7 @@
                         android:layout_marginTop="10dp"
                         android:elegantTextHeight="true"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -122,7 +122,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="left"
+                        android:gravity="start"
                         android:ems="7"
                         android:layout_marginTop="10dp"
                         android:elegantTextHeight="true"
@@ -208,7 +208,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/gestisci_utenti_button"
                     style="@style/Widget.AppCompat.Button.Colored"
-                    android:background="@color/my_green"
+                    android:background="@color/my_blue"
                     android:layout_width="wrap_content"
                     android:gravity="center"
                     android:layout_height="35dp"
@@ -246,9 +246,6 @@
 
 
             </LinearLayout>
-
-
         </LinearLayout>
-
     </LinearLayout>
 </layout>

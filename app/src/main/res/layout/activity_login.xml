@@ -41,12 +41,10 @@
 
                 <EditText
                     android:id="@+id/username_edit"
+                    style="@style/MyEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:hint="Enter your username"
-                    android:textColor="@color/black"
-                    android:textStyle="bold" />
+                    android:hint="@string/enter_your_username" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -57,18 +55,17 @@
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:passwordToggleEnabled="true">
+                app:endIconMode="password_toggle">
 
                 <EditText
                     android:id="@+id/password_edit"
+                    style="@style/MyEditTextStylePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:hint="Enter your password"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"/>
+                    android:hint="@string/enter_your_password" />
 
 
             </com.google.android.material.textfield.TextInputLayout>

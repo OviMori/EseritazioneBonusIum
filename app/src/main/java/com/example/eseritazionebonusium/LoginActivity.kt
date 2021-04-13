@@ -1,10 +1,9 @@
 package com.example.eseritazionebonusium
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
-import android.os.PersistableBundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -24,12 +23,26 @@ class LoginActivity : AppCompatActivity() {
             openRegistrazioneActivity()
         }
 
+        binding.passwordEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.textInputLayout.isEndIconVisible = true
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.passwordEdit.setError(null)
+            }
+        })
+
         binding.accediButton.setOnClickListener{
             var usernameInserito = binding.usernameEdit.text.toString()
             var passwordInserita = binding.passwordEdit.text.toString()
             if(verificaCredenziali(usernameInserito, passwordInserita)){
                 openHomeActivity()
             }else{
+                binding.textInputLayout.isEndIconVisible = false
                 binding.usernameEdit.setError("Le credenziali non sono corrette!")
                 binding.passwordEdit.setError("Le credenziali non sono corrette!")
             }
@@ -59,8 +72,8 @@ class LoginActivity : AppCompatActivity() {
 
 
 
-    private fun saveStatusIfAdmin(utente : Utente){
-        if(utente.admin == 1){
+    private fun saveStatusIfAdmin(user : User){
+        if(user.admin == 1){
             isAnAdmin = 1
         }else{
             isAnAdmin = 0

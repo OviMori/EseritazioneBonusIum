@@ -2,7 +2,7 @@ package com.example.eseritazionebonusium
 
 import android.icu.text.Edits
 
-data class Utente(
+data class User(
     var username: String = "",
     var password : String = "",
     var  citta : String = "",

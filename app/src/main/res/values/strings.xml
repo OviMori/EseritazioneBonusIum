@@ -7,6 +7,11 @@
     <string name="error_messagge_wrong_username">Username errato</string>
     <string name="error_messagge_wrong_password">Password errata</string>
     <string name="registrati">Registrati</string>
+    <string name="i_tuoi_dati">I tuoi dati:</string>
+    <string name="username">Username:</string>
+    <string name="enter_your_username">Enter your username</string>
+    <string name="nuova_password">Nuova password</string>
+    <string name="conferma_password">Conferma password</string>
 
 
 </resources>

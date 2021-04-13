@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium
+package com.example.eseritazionebonusium.gestioneutenti
 
 class ItemRow (
     var mImageResourceIcon : Int,
@@ -6,6 +6,4 @@ class ItemRow (
     var mButton : Int
 
     ){
-
-
 }

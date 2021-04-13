@@ -7,6 +7,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.provider.ContactsContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -35,11 +37,55 @@ class ModificaPasswordActivity : AppCompatActivity() {
             val newPasswordConferma : String = binding.passwordConfermaEdit.text.toString()
 
             if(verificaUguaglianzaPasswordInserite(newPassword, newPasswordConferma)){
-                aggiornaDatiUtente(newPassword)
-                setDatiUtenteCorrente()
+                if(checkMinInput(newPassword)){
+                    aggiornaDatiUtente(newPassword)
+                    setDatiUtenteCorrente()
+                    Toast.makeText(this, " Password updated. ", Toast.LENGTH_SHORT).show()
+                }
+
             }
         }
 
+        binding.passwordEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.passwordEdit.setError(null)
+                binding.textInputLayoutModificaPassword.isEndIconVisible = true
+            }
+
+            @SuppressLint("WrongConstant")
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
+        binding.passwordConfermaEdit.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+            @SuppressLint("WrongConstant")
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                binding.passwordConfermaEdit.setError(null)
+                binding.textInputLayoutConfermaModificaPassword.isEndIconVisible = true
+            }
+
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+        })
+
+    }
+
+    fun checkMinInput(newPassword: String) : Boolean{
+        if(newPassword.trim().isBlank()){
+            binding.textInputLayoutModificaPassword.isEndIconVisible = false
+            binding.passwordEdit.setError("Password cannot be blank! ")
+            return false
+        }
+        return true
     }
 
     fun aggiornaDatiUtente( newPassword : String){
@@ -52,10 +98,12 @@ class ModificaPasswordActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("WrongConstant")
     private fun verificaUguaglianzaPasswordInserite(password : String, confermaPassword : String) : Boolean{
         if(password.equals(confermaPassword)){
             return true
         }else{
+            binding.textInputLayoutModificaPassword.isEndIconVisible = false
             binding.passwordEdit.setError("Le password inserite non corrispondono!")
             return false
         }

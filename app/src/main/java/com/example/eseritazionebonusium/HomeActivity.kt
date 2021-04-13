@@ -1,22 +1,20 @@
 package com.example.eseritazionebonusium
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.opengl.Visibility
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
 import com.example.eseritazionebonusium.databinding.ActivityHomeBinding
-import com.example.eseritazionebonusium.databinding.ActivityModificaPasswordBinding
-import kotlin.math.log
+import com.example.eseritazionebonusium.gestioneutenti.GestioneUtentiActivity
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -38,6 +36,8 @@ class HomeActivity : AppCompatActivity() {
         }
 
         setDatiUtenteCorrente()
+
+        binding.homeMainNome.text = "Benvenuto "+ DataRepository.getCurrentUser().username
 
         binding.gestisciUtentiButton.setOnClickListener{
             val logoutIntent : Intent  = Intent(this, GestioneUtentiActivity::class.java)

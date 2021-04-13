@@ -5,9 +5,9 @@
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/bonus_blue_circle"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/bonus_blue_circle"
         android:supportsRtl="true"
         android:theme="@style/Theme.EseritazioneBonusIum">
         <activity android:name=".MainActivity">
@@ -21,7 +21,7 @@
         <activity android:name=".RegistrazioneActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".ModificaPasswordActivity" />
-        <activity android:name=".GestioneUtentiActivity" />
+        <activity android:name=".gestioneutenti.GestioneUtentiActivity" />
     </application>
 
 </manifest>

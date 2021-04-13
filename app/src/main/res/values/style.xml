@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <style name="MyEditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="backgroundTint">@color/white</item>
+        <item name="maxLines">1</item>
+        <item name="android:inputType">text</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyEditTextStylePassword" parent="MyEditTextStyle">
+        <item name="android:inputType">textPassword</item>
+    </style>
 </resources>
