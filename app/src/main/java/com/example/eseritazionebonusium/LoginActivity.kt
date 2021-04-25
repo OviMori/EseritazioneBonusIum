@@ -7,17 +7,23 @@ import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.eseritazionebonusium.databinding.ActivityLoginBinding
+import com.example.eseritazionebonusium.vm.Injector
+import com.example.eseritazionebonusium.vm.UserViewModel
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityLoginBinding
-    private var isAnAdmin = 0
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+
+        val factory = Injector.provideMyUserViewModelFactory()
+        viewModel = ViewModelProvider(this, factory).get(UserViewModel::class.java)
 
         binding.registrazioneButton.setOnClickListener{
             openRegistrazioneActivity()
@@ -50,47 +56,22 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun verificaCredenziali(username: String, password: String) : Boolean{
-        val userExist = DataRepository.getUser(username)
-
-        if (!userExist.username.equals("")){    //if user exixst
-            if(userExist.password.equals(password)){    //if password is equal to saved login
-                DataRepository.salvaUtenteCorrente(userExist)  //save current user in sharedPreferences
-                saveStatusIfAdmin(userExist)
-                return true;
-
-            }else{ //if pawwsord is wrong
-                binding.passwordEdit.setError("Password errata!")
-            }
-
-        }else{  //if user does not exist
-            binding.usernameEdit.setError("Questo account non esiste!")
-            return false
+    private fun verificaCredenziali(username: String, password: String) : Boolean {
+        when (viewModel.verificaCredenzialiAccesso(username, password)) {
+            0 -> return true
+            -1 -> binding.usernameEdit.setError("Questo account non esiste!")
+            -2 -> binding.passwordEdit.setError("Password errata!")
         }
         return false
-    }
-
-
-
-    private fun saveStatusIfAdmin(user : User){
-        if(user.admin == 1){
-            isAnAdmin = 1
-        }else{
-            isAnAdmin = 0
-        }
     }
 
     private fun openHomeActivity(){
         val toHomeIntent = Intent(this, HomeActivity::class.java)
 
-        Log.i("Status Admin::::::::::", ""+this.isAnAdmin )
-
-        if(isAnAdmin == 1){
+        if(viewModel.isAnAdmin.equals(true)){
             toHomeIntent.putExtra("ISANADMIN", 1)
-            Log.i("Status SI Admin::::::::::", ""+this.isAnAdmin )
         }else{
             toHomeIntent.putExtra("ISANADMIN", 0)
-            Log.i("Status NO Admin::::::::::", ""+this.isAnAdmin )
         }
         startActivity(toHomeIntent)
         finish()

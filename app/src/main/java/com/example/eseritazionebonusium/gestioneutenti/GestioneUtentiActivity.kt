@@ -43,7 +43,7 @@ class GestioneUtentiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gestisci_utenti)
 
-        val repo = Injector.provideMyUserViewModel()
+        val repo = Injector.provideMyUserViewModelFactory()
         val model = ViewModelProvider(this, repo).get(UserViewModel::class.java)
 
 

@@ -2,7 +2,7 @@ package com.example.eseritazionebonusium.vm
 
 object Injector {
 
-    fun provideMyUserViewModel(): UserViewModelFactory{
+    fun provideMyUserViewModelFactory(): UserViewModelFactory{
         return UserViewModelFactory()
     }
 }

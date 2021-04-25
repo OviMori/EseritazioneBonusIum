@@ -7,25 +7,30 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.eseritazionebonusium.databinding.ActivityHomeBinding
 import com.example.eseritazionebonusium.gestioneutenti.GestioneUtentiActivity
+import com.example.eseritazionebonusium.gestioneutenti.UserViewHolder
+import com.example.eseritazionebonusium.vm.Injector
+import com.example.eseritazionebonusium.vm.UserViewModel
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var viewModel : UserViewModel
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        val factory = Injector.provideMyUserViewModelFactory()
+        viewModel = ViewModelProvider(this, factory).get(UserViewModel::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
-        val intent = getIntent()
-        val isAnAdmin : Int = intent.getIntExtra("ISANADMIN", 0)
 
-        Log.i("Value of ISANADMIN**************", ""+isAnAdmin)
 
-        if(isAnAdmin == 1){
+
+        if(viewModel.isAnAdmin){
             //mostra layout admin
             binding.adminIconLayout.visibility = View.VISIBLE
             binding.gestisciUtentiButton.visibility = View.VISIBLE

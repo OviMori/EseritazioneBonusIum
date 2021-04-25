@@ -7,23 +7,25 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.eseritazionebonusium.databinding.ActivityRegistrazioneBinding
+import com.example.eseritazionebonusium.vm.Injector
+import com.example.eseritazionebonusium.vm.UserViewModel
 import java.util.*
 
 class RegistrazioneActivity : AppCompatActivity() {
 
-
-    private val CREDENZIALI_SALVATE_USERNAME : String = "SET_CREDENZIALI_USERNAME"
-    private val CREDENZIALI_SALVATE_PASSWORD : String = "SET_CREDENZIALI_PASSWORD"
-
     private lateinit var binding : ActivityRegistrazioneBinding
+    private lateinit var model : UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrazione)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_registrazione)
+        val factory = Injector.provideMyUserViewModelFactory()
+        model = ViewModelProvider(this, factory).get(UserViewModel::class.java)
 
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_registrazione)
 
         binding.registrazioneDataNascita.setOnClickListener {
             showDataPicker()
@@ -41,17 +43,21 @@ class RegistrazioneActivity : AppCompatActivity() {
 
 
             if(checkMinInput(newUsername, newPassword)){
-                if(verificaUguaglianzaPasswordInserite(newPassword, newConfermaPassword)){
+                if(model.verificaUguaglianzaPasswordInserite(newPassword, newConfermaPassword)){
 
-                    var newUser : User? = verificaCredenziali(newUsername, newPassword, newCitta, newDataNascita)
+                    var newUser : User? = model.verificaCredenziali(newUsername, newPassword, newCitta, newDataNascita)
 
                     if(newUser != null){
-                        salvaCredenziali(newUser)
+                        model.salvaCredenziali(newUser)
                         Toast.makeText(this, "Salvataggio account...", Toast.LENGTH_SHORT).show()
                         val toLoginActivity = Intent(this, LoginActivity::class.java)
                         startActivity(toLoginActivity)
                         finish()
+                    }else {
+                        binding.registrazioneUsernameEdit.setError("Questo username e' gia utilizzato da un altro account!")
                     }
+                }else{
+                    binding.registrazionePasswordEdit.setError("Le password inserite non corrispondono!")
                 }
             }
 
@@ -84,39 +90,6 @@ class RegistrazioneActivity : AppCompatActivity() {
             binding.registrazioneDataNascita.setText("" + dayOfMonth + ", " + month + ", " + year)
         }, year, month, day)
         dpd.show()
-    }
-
-    private fun verificaUguaglianzaPasswordInserite(password : String, confermaPassword : String) : Boolean{
-        if(password.equals(confermaPassword)){
-            return true
-        }else{
-            binding.registrazionePasswordEdit.setError("Le password inserite non corrispondono!")
-            return false
-        }
-    }
-
-    private fun verificaCredenziali(username: String, password: String,  citta: String,  dataNascita: String) : User?{
-        val utente = DataRepository.getUser(username)
-
-        if(utente.username.equals("admin")){    //can not create user with "admin" username
-            return null
-        }
-
-        if (!utente.username.equals("")){   //if username already exist
-            binding.registrazioneUsernameEdit.setError("Questo username e' gia utilizzato da un altro account!")
-            return null;
-        }else{
-            val createUtente = User(username, password, citta, dataNascita)
-            return createUtente
-        }
-    }
-
-    /**
-     * @arrayCredenziali array che puo essere o di username o di password
-     * @macroTipoCredenziali indica se l array contiene serie di username o di password
-     */
-    private fun salvaCredenziali(newUser : User){
-        DataRepository.salvaUtente(newUser)
     }
 
 }

@@ -13,17 +13,18 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.eseritazionebonusium.databinding.ActivityModificaPasswordBinding
+import com.example.eseritazionebonusium.vm.UserViewModel
 
 class ModificaPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityModificaPasswordBinding
+    private lateinit var viewModel: UserViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_modifica_password)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_modifica_password)
-
         setDatiUtenteCorrente()
 
         binding.tornaHomeButton.setOnClickListener{
@@ -36,13 +37,18 @@ class ModificaPasswordActivity : AppCompatActivity() {
             val newPassword : String = binding.passwordEdit.text.toString()
             val newPasswordConferma : String = binding.passwordConfermaEdit.text.toString()
 
-            if(verificaUguaglianzaPasswordInserite(newPassword, newPasswordConferma)){
+            if(viewModel.verificaUguaglianzaPasswordInserite(newPassword, newPasswordConferma)){
                 if(checkMinInput(newPassword)){
-                    aggiornaDatiUtente(newPassword)
+                    if(!viewModel.aggiornaDatiUtente(newPassword)){
+                        Toast.makeText(this, "Cannot modify admin credential", Toast.LENGTH_SHORT).show()
+                    }
                     setDatiUtenteCorrente()
                     Toast.makeText(this, " Password updated. ", Toast.LENGTH_SHORT).show()
                 }
 
+            }else{
+                binding.textInputLayoutModificaPassword.isEndIconVisible = false
+                binding.passwordEdit.setError("Le password inserite non corrispondono!")
             }
         }
 
@@ -98,21 +104,10 @@ class ModificaPasswordActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("WrongConstant")
-    private fun verificaUguaglianzaPasswordInserite(password : String, confermaPassword : String) : Boolean{
-        if(password.equals(confermaPassword)){
-            return true
-        }else{
-            binding.textInputLayoutModificaPassword.isEndIconVisible = false
-            binding.passwordEdit.setError("Le password inserite non corrispondono!")
-            return false
-        }
-    }
 
     private fun setDatiUtenteCorrente(){
-        val utenteCorrente = DataRepository.getCurrentUser()
-
-        binding.modificaPasswordUsernameCorrente.setText(utenteCorrente.username)
-        binding.modificaPasswordPasswordCorrente.setText(utenteCorrente.password)
+        val user = viewModel.getCurrentUser()
+        binding.modificaPasswordUsernameCorrente.setText(user.username)
+        binding.modificaPasswordPasswordCorrente.setText(user.password)
     }
 }
