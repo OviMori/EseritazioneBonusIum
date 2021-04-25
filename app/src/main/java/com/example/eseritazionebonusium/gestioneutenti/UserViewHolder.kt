@@ -1,28 +1,23 @@
 package com.example.eseritazionebonusium.gestioneutenti
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.appcompat.widget.AppCompatButton
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.User
-import com.example.eseritazionebonusium.databinding.UserRowItemBinding
+import kotlinx.android.synthetic.main.user_row_item.view.*
 
-class UserViewHolder (view: View) : RecyclerView.ViewHolder(view) {
+class UserViewHolder(view: View, listener: View.OnClickListener) : RecyclerView.ViewHolder(view) {
 
-    var mImageResourceIcon : ImageView = view.findViewById(R.id.utente_icon)
-    var mText : TextView = view.findViewById(R.id.utente_textview_row)
-    var mButton : AppCompatButton = view.findViewById(R.id.utente_row_button)
-
-
-    fun bind(user: User){
-        mText.setText(user.username)
+    init {
+        itemView.cancella_utente_button.setOnClickListener(listener)
+        itemView.admin_management_row_button.setOnClickListener(listener)
     }
 
-    fun setAdminText(user: User){
-        mButton.setText("Admin")
-    }
+    fun bind(user: User) {
+        itemView.cancella_utente_button.tag = user
+        itemView.admin_management_row_button.tag = user
 
+        itemView.utente_textview_row.text = user.username
+        itemView.admin_management_row_button.text = if (user.isAdmin) "Admin" else "Imposta Admin"
+
+    }
 }

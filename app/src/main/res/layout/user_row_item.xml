@@ -10,7 +10,7 @@
 
 
         <ImageView
-            android:id="@+id/utente_icon"
+            android:id="@+id/cancella_utente_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="10dp"
@@ -30,12 +30,12 @@
             android:text="Nome utente"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/utente_row_button"
-            app:layout_constraintLeft_toRightOf="@+id/utente_icon"/>
+            app:layout_constraintRight_toLeftOf="@+id/admin_management_row_button"
+            app:layout_constraintLeft_toRightOf="@+id/cancella_utente_button"/>
 
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/utente_row_button"
+            android:id="@+id/admin_management_row_button"
             style="@style/Widget.AppCompat.Button.Colored"
             android:background="@color/my_green"
             android:layout_width="wrap_content"

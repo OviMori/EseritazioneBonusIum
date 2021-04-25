@@ -11,6 +11,8 @@ data class User(
     var admin : Int = 0
 ) : HashSet<String>() {
 
+    val isAdmin: Boolean get() = admin == 1
+
     fun  creaNuovoUtenteDaStringa(str : String){
         var strArrUtente = str.split("*")
         this.username = strArrUtente[0]

@@ -22,33 +22,31 @@ object DataRepository {
         sharPrefUsers.edit().clear().apply()
     }
 
-    fun isAdmin(user: User): Boolean{
-        if(user.admin == 1){
+    fun setAdmin(user: User): Boolean{
+        if(userExist(user.username)){
+            user.admin = 1
+            salvaUtente(user)
             return true
+        }else{
+            return false
         }
-        return false
-    }
-
-    fun isAdmin(strUser: String): Boolean{
-        val user = User()
-        user.creaNuovoUtenteDaStringa(strUser)
-
-        if(user.admin == 1){
-            return true
-        }
-        return false
     }
 
     fun dropUser(user: User) : Boolean{
         if(sharPrefUsers.contains(user.username)){
+            Log.i("Drop User", user.toString())
             sharPrefUsers.edit().remove(user.username).apply()
+
+            for(tempUser in sharPrefUsers.all.toList()){
+                Log.i("For test befor drop", tempUser.second.toString())
+            }
             return true
         }
         return false
     }
 
     fun getUsersList() : List<User>{
-        val userList: ArrayList<User> = ArrayList()
+        var userList: ArrayList<User> = ArrayList()
         val userListFromPreferences: Map<String, *> = sharPrefUsers.all
 
 
@@ -56,6 +54,10 @@ object DataRepository {
             val tempUser = User()
             tempUser.creaNuovoUtenteDaStringa(user.value.toString())   //create new user
             userList.add(tempUser)
+        }
+
+        for(tempUser in userList){
+            Log.i("For test after drop", tempUser.toString())
         }
 
         return userList

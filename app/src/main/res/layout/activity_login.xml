@@ -44,7 +44,8 @@
                     style="@style/MyEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/enter_your_username" />
+                    android:hint="@string/enter_your_username"
+                    android:text="admin"/>
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
@@ -65,7 +66,8 @@
                     style="@style/MyEditTextStylePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/enter_your_password" />
+                    android:hint="@string/enter_your_password"
+                    android:text="admin"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
