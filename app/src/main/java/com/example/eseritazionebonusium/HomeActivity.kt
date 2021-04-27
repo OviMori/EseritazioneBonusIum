@@ -10,22 +10,20 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.eseritazionebonusium.databinding.ActivityHomeBinding
 import com.example.eseritazionebonusium.gestioneutenti.GestioneUtentiActivity
-import com.example.eseritazionebonusium.gestioneutenti.UserViewHolder
-import com.example.eseritazionebonusium.vm.Injector
-import com.example.eseritazionebonusium.vm.UserViewModel
+
+import com.example.eseritazionebonusium.vm.UserViewModelHome
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
-    private lateinit var viewModel : UserViewModel
+    private lateinit var viewModel: UserViewModelHome
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val factory = Injector.provideMyUserViewModelFactory()
-        viewModel = ViewModelProvider(this, factory).get(UserViewModel::class.java)
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelHome::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
 

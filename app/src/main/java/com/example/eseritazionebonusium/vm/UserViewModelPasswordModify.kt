@@ -1,12 +1,11 @@
 package com.example.eseritazionebonusium.vm
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eseritazionebonusium.DataRepository
 import com.example.eseritazionebonusium.User
 
-class UserViewModel : ViewModel(){
+class UserViewModelPasswordModify : ViewModel() {
 
     private var userList = DataRepository.getUsersList() as MutableList<User>
     private val userListLiveData = MutableLiveData<List<User>>(userList)
@@ -23,17 +22,17 @@ class UserViewModel : ViewModel(){
 
     val isAnAdmin get() = isAdmin
 
-    fun getCurrentUser(): User{
+    fun getCurrentUser(): User {
         return DataRepository.getCurrentUser()
     }
 
-    fun aggiornaDatiUtente( newPassword : String): Boolean{
+    fun aggiornaDatiUtente(newPassword: String): Boolean {
         val currentUser = DataRepository.getCurrentUser()
 
-        if(!currentUser.username.equals("admin")){  //if is not the admin account
+        if (!currentUser.username.equals("admin")) {  //if is not the admin account
             DataRepository.salvaCambioPassword(newPassword)
             return true
-        }else{
+        } else {
             return false
         }
     }
@@ -49,10 +48,10 @@ class UserViewModel : ViewModel(){
      * Controlla se le credenziali sono gia presenti nel sistema, se non sono presenti restituisce un utente
      */
     fun verificaCredenziali(
-        username: String,
-        password: String,
-        citta: String,
-        dataNascita: String
+            username: String,
+            password: String,
+            citta: String,
+            dataNascita: String
     ): User? {
         val utente = DataRepository.getUser(username)
 
@@ -68,25 +67,25 @@ class UserViewModel : ViewModel(){
         }
     }
 
-    fun verificaCredenzialiAccesso(username: String, password: String) : Int{
+    fun verificaCredenzialiAccesso(username: String, password: String): Int {
         val userExist = DataRepository.getUser(username)
 
-        if (!userExist.username.equals("")){    //if user exixst
-            if(userExist.password.equals(password)){    //if password is equal to saved login
+        if (!userExist.username.equals("")) {    //if user exixst
+            if (userExist.password.equals(password)) {    //if password is equal to saved login
                 DataRepository.salvaUtenteCorrente(userExist)  //save current user in sharedPreferences
                 saveStatusIfAdmin(userExist)
                 return 0;
 
-            }else{ //if pawwsord is wrong
+            } else { //if pawwsord is wrong
                 return -2
             }
 
-        }else{  //if user does not exist
+        } else {  //if user does not exist
             return -1
         }
     }
 
-    private fun saveStatusIfAdmin(user : User){
+    private fun saveStatusIfAdmin(user: User) {
         isAdmin = user.admin == 1
     }
 
@@ -94,7 +93,7 @@ class UserViewModel : ViewModel(){
      * @arrayCredenziali array che puo essere o di username o di password
      * @macroTipoCredenziali indica se l array contiene serie di username o di password
      */
-    fun salvaCredenziali(newUser : User){
+    fun salvaCredenziali(newUser: User) {
         DataRepository.salvaUtente(newUser)
     }
 }

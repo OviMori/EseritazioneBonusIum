@@ -16,6 +16,12 @@ object DataRepository {
     fun init(context : Context){
         sharPrefUsers = context.getSharedPreferences(MY_SHARED_PREF_UTENTI, Context.MODE_PRIVATE)
         sharPrefMyUser = context.getSharedPreferences(MY_SHARED_PREF_UTENTE_CORRENTE, Context.MODE_PRIVATE)
+        verifyAdminAccount()
+    }
+    private fun verifyAdminAccount(){
+        if(!adminExist()){   //if admin does not exist
+            createAdminAccount()
+        }
     }
 
     fun removeAllAccounts(){

@@ -18,8 +18,8 @@ import com.example.eseritazionebonusium.HomeActivity
 import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.User
 import com.example.eseritazionebonusium.databinding.ActivityGestisciUtentiBinding
-import com.example.eseritazionebonusium.vm.Injector
 import com.example.eseritazionebonusium.vm.UserViewModel
+import com.example.eseritazionebonusium.vm.UserViewModelUserListManager
 
 class GestioneUtentiActivity : AppCompatActivity() {
 
@@ -43,8 +43,7 @@ class GestioneUtentiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gestisci_utenti)
 
-        val repo = Injector.provideMyUserViewModelFactory()
-        val model = ViewModelProvider(this, repo).get(UserViewModel::class.java)
+        val model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelUserListManager::class.java)
 
 
         userList = DataRepository.getUsersList()    //get the list of all users
@@ -59,7 +58,6 @@ class GestioneUtentiActivity : AppCompatActivity() {
             mAdapter = UserListAdapter(model.getUserList(), listener)
             mRecyclerView.adapter = mAdapter
         })
-
 
         mRecyclerView.layoutManager = mLayoutManager
 

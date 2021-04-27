@@ -9,21 +9,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.eseritazionebonusium.databinding.ActivityRegistrazioneBinding
-import com.example.eseritazionebonusium.vm.Injector
 import com.example.eseritazionebonusium.vm.UserViewModel
+import com.example.eseritazionebonusium.vm.UserViewModelRegistration
 import java.util.*
 
 class RegistrazioneActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRegistrazioneBinding
-    private lateinit var model : UserViewModel
+    private lateinit var model : UserViewModelRegistration
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrazione)
 
-        val factory = Injector.provideMyUserViewModelFactory()
-        model = ViewModelProvider(this, factory).get(UserViewModel::class.java)
+        model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelRegistration::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registrazione)
 

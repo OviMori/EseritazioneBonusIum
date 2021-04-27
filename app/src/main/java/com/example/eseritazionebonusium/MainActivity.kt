@@ -13,17 +13,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        verifyAdminAccount()
         var inte = Intent(this, LoginActivity::class.java)
         startActivity(inte)
         finish()
     }
 
-    private fun verifyAdminAccount(){
-        if(!DataRepository.adminExist()){   //if admin does not exist
-            DataRepository.createAdminAccount()
-        }
-    }
+
 }
 
 
