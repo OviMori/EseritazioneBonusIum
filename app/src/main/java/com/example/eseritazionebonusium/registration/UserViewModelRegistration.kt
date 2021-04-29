@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium.vm
+package com.example.eseritazionebonusium.registration
 
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData

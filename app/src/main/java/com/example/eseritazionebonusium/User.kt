@@ -11,6 +11,8 @@ data class User(
     var admin : Int = 0
 ) : HashSet<String>() {
 
+
+
     val isAdmin: Boolean get() = admin == 1
 
     override fun toString(): String {
@@ -18,22 +20,32 @@ data class User(
     }
 
     companion object{
+        val USER_SERIALIZATION_ARRAY_DIM = 6
+
         fun fromString(str : String?) : User?{
+            //Posso usare il costrutto when per i vari casi
+
             if(str == null ) return null
+
+            var strArrUser = str.split("*")
+            if(strArrUser.size != USER_SERIALIZATION_ARRAY_DIM ) return null
+
+            if()
+
 
             /*Controls*/
             var user = User()
-            var strArrUtente = str.split("*")
-            user.username = strArrUtente[0]
-            user.password = strArrUtente[1]
-            user.citta = strArrUtente[2]
-            user.dataNascita = strArrUtente[3]
+//            var strArrUtente = str.split("*")
+            user.username = strArrUser[0]
+            user.password = strArrUser[1]
+            user.citta = strArrUser[2]
+            user.dataNascita = strArrUser[3]
 
-            if(strArrUtente[4] == "true"){
+            if(strArrUser[4] == "true"){
                 user.eliminare = true
             }
 
-            if(strArrUtente[5] == "1"){
+            if(strArrUser[5] == "1"){
                 user.admin = 1
             }else{
                 user.admin = 0

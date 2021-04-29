@@ -17,11 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity"/>
-        <activity android:name=".RegistrazioneActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".ModificaPasswordActivity" />
-        <activity android:name=".gestioneutenti.GestioneUtentiActivity" />
+        <activity android:name=".login.LoginActivity"/>
+        <activity android:name=".registration.RergistrationActivity" />
+        <activity android:name=".home.HomeActivity" />
+        <activity android:name=".changepassword.ModificaPasswordActivity" />
+        <activity android:name=".usermanager.GestioneUtentiActivity" />
     </application>
 
 </manifest>

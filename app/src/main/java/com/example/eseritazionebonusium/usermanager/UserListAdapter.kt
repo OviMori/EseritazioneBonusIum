@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium.gestioneutenti
+package com.example.eseritazionebonusium.usermanager
 
 import android.view.LayoutInflater
 import android.view.View

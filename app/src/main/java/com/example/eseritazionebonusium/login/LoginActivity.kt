@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium
+package com.example.eseritazionebonusium.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,9 +7,10 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.eseritazionebonusium.home.HomeActivity
+import com.example.eseritazionebonusium.R
+import com.example.eseritazionebonusium.registration.RergistrationActivity
 import com.example.eseritazionebonusium.databinding.ActivityLoginBinding
-
-import com.example.eseritazionebonusium.vm.UserViewModelLogIn
 
 class LoginActivity : AppCompatActivity() {
 
@@ -78,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun openRegistrazioneActivity(){
-        val registrazioneIntent = Intent(this, RegistrazioneActivity::class.java)
+        val registrazioneIntent = Intent(this, RergistrationActivity::class.java)
         startActivity(registrazioneIntent)
         finish()
     }

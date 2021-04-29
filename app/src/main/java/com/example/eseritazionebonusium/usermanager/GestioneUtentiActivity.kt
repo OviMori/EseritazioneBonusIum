@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium.gestioneutenti
+package com.example.eseritazionebonusium.usermanager
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,11 +14,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.eseritazionebonusium.DataRepository
-import com.example.eseritazionebonusium.HomeActivity
+import com.example.eseritazionebonusium.home.HomeActivity
 import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.User
 import com.example.eseritazionebonusium.databinding.ActivityGestisciUtentiBinding
-import com.example.eseritazionebonusium.vm.UserViewModel
 import com.example.eseritazionebonusium.vm.UserViewModelUserListManager
 
 class GestioneUtentiActivity : AppCompatActivity() {

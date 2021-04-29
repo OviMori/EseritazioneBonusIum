@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium
+package com.example.eseritazionebonusium.registration
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
@@ -8,12 +8,13 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.eseritazionebonusium.R
+import com.example.eseritazionebonusium.User
 import com.example.eseritazionebonusium.databinding.ActivityRegistrazioneBinding
-import com.example.eseritazionebonusium.vm.UserViewModel
-import com.example.eseritazionebonusium.vm.UserViewModelRegistration
+import com.example.eseritazionebonusium.login.LoginActivity
 import java.util.*
 
-class RegistrazioneActivity : AppCompatActivity() {
+class RergistrationActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityRegistrazioneBinding
     private lateinit var model : UserViewModelRegistration
@@ -22,7 +23,8 @@ class RegistrazioneActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registrazione)
 
-        model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelRegistration::class.java)
+        model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            UserViewModelRegistration::class.java)
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registrazione)
 

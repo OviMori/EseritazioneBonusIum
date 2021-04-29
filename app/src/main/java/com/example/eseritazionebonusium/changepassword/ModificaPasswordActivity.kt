@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium
+package com.example.eseritazionebonusium.changepassword
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -9,8 +9,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.eseritazionebonusium.DataRepository
+import com.example.eseritazionebonusium.home.HomeActivity
+import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.databinding.ActivityModificaPasswordBinding
-import com.example.eseritazionebonusium.vm.UserViewModelPasswordModify
 
 class ModificaPasswordActivity : AppCompatActivity() {
 
@@ -23,7 +25,8 @@ class ModificaPasswordActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_modifica_password)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelPasswordModify::class.java)
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            UserViewModelPasswordModify::class.java)
 
         setDatiUtenteCorrente()
 

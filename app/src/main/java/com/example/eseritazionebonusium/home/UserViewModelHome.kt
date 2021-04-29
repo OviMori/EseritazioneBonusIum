@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium.vm
+package com.example.eseritazionebonusium.home
 
 import androidx.lifecycle.ViewModel
 

@@ -1,4 +1,4 @@
-package com.example.eseritazionebonusium
+package com.example.eseritazionebonusium.home
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -8,10 +8,12 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
+import com.example.eseritazionebonusium.DataRepository
+import com.example.eseritazionebonusium.R
+import com.example.eseritazionebonusium.changepassword.ModificaPasswordActivity
 import com.example.eseritazionebonusium.databinding.ActivityHomeBinding
-import com.example.eseritazionebonusium.gestioneutenti.GestioneUtentiActivity
-
-import com.example.eseritazionebonusium.vm.UserViewModelHome
+import com.example.eseritazionebonusium.usermanager.GestioneUtentiActivity
+import com.example.eseritazionebonusium.login.LoginActivity
 
 class HomeActivity : AppCompatActivity() {
 
@@ -23,7 +25,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelHome::class.java)
+        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(
+            UserViewModelHome::class.java)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_home)
 
 
