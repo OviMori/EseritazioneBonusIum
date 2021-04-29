@@ -13,25 +13,32 @@ data class User(
 
     val isAdmin: Boolean get() = admin == 1
 
-    fun  creaNuovoUtenteDaStringa(str : String){
-        var strArrUtente = str.split("*")
-        this.username = strArrUtente[0]
-        this.password = strArrUtente[1]
-        this.citta = strArrUtente[2]
-        this.dataNascita = strArrUtente[3]
-
-        if(strArrUtente[4] == "true"){
-            this.eliminare = true
-        }
-
-        if(strArrUtente[5] == "1"){
-            this.admin = 1
-        }else{
-            this.admin = 0
-        }
-    }
-
     override fun toString(): String {
         return ""+this.username+"*"+this.password+"*"+this.citta+"*"+this.dataNascita+"*"+this.eliminare+"*"+this.admin
+    }
+
+    companion object{
+        fun fromString(str : String?) : User?{
+            if(str == null ) return null
+
+            /*Controls*/
+            var user = User()
+            var strArrUtente = str.split("*")
+            user.username = strArrUtente[0]
+            user.password = strArrUtente[1]
+            user.citta = strArrUtente[2]
+            user.dataNascita = strArrUtente[3]
+
+            if(strArrUtente[4] == "true"){
+                user.eliminare = true
+            }
+
+            if(strArrUtente[5] == "1"){
+                user.admin = 1
+            }else{
+                user.admin = 0
+            }
+            return user
+        }
     }
 }

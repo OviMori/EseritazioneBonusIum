@@ -10,7 +10,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="MyEditTextStylePassword" parent="MyEditTextStyle">
-        <item name="android:inputType">textPassword</item>
-    </style>
+        <style name="MyEditTextStyle.Password">
+            <item name="android:inputType">textPassword</item>
+        </style>
 </resources>

@@ -102,28 +102,20 @@ object DataRepository {
     fun getCurrentUser() : User{
         val strCurrentUser = sharPrefMyUser.getString(UTENTE_CORRENTE_KEY, "") as String
         val currentUser = User()
-        Log.i("recupero Utente  corrente ", ""+strCurrentUser)
+        Log.i("recupero Utente  corrente ", "" + strCurrentUser)
 
-        if(!strCurrentUser.equals("")){
+        if (!strCurrentUser.equals("")) {
             currentUser.creaNuovoUtenteDaStringa(strCurrentUser)
         }
         return currentUser
     }
 
-    fun getUser(username : String) : User{
-        val userGeneratedFromString = User()
-        val utenteInString : String = sharPrefUsers.getString(username, "") as String
-
-        Log.i("Username passed ", username)
-        Log.i("Utente generato ", utenteInString)
-
-        if(!utenteInString.equals("")){ //if user exist
-            userGeneratedFromString.creaNuovoUtenteDaStringa(utenteInString)
-        }
-        return userGeneratedFromString
+    fun getUser(username: String): User? {
+        val utenteInString = sharPrefUsers.getString(username, null)
+        return User.fromString(utenteInString)
     }
 
-    fun createAdminAccount(){
+    fun createAdminAccount() {
         val utenteAdmin = User("admin", "admin", "admin", "", false, 1)
         salvaCredenziali(utenteAdmin)
     }

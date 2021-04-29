@@ -29,15 +29,12 @@
             android:orientation="vertical"
             app:layout_constraintGuide_begin="16dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/username_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                app:errorEnabled="true">
 
                 <EditText
                     android:id="@+id/username_edit"
@@ -48,30 +45,26 @@
                     android:text="admin"/>
 
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/text_input_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/enter_your_password"
+                app:errorEnabled="true"
                 app:endIconMode="password_toggle">
 
                 <EditText
                     android:id="@+id/password_edit"
-                    style="@style/MyEditTextStylePassword"
+                    style="@style/MyEditTextStyle.Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/enter_your_password"
                     android:text="admin"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"

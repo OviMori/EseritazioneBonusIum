@@ -34,11 +34,11 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                binding.textInputLayout.isEndIconVisible = true
+//                binding.textInputLayout.isEndIconVisible = true
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.passwordEdit.setError(null)
+                binding.textInputLayout.setError(null)
             }
         })
 
@@ -48,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
             if(verificaCredenziali(usernameInserito, passwordInserita)){
                 openHomeActivity()
             }else{
-                binding.textInputLayout.isEndIconVisible = false
+//                binding.textInputLayout.isEndIconVisible = false
                 binding.usernameEdit.setError("Le credenziali non sono corrette!")
                 binding.passwordEdit.setError("Le credenziali non sono corrette!")
             }
@@ -57,10 +57,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun verificaCredenziali(username: String, password: String) : Boolean {
-        when (viewModel.verificaCredenzialiAccesso(username, password)) {
-            0 -> return true
-            -1 -> binding.usernameEdit.setError("Questo account non esiste!")
-            -2 -> binding.passwordEdit.setError("Password errata!")
+        when (viewModel.doLogin(username, password)) {
+            UserViewModelLogIn.LoginResult.USER_LOGGED -> return true
+            UserViewModelLogIn.LoginResult.USER_NOT_FOUND -> binding.usernameEdit.setError("Questo account non esiste!")
+            UserViewModelLogIn.LoginResult.WRONG_PASSWORD -> binding.passwordEdit.setError("Password errata!")
         }
         return false
     }
