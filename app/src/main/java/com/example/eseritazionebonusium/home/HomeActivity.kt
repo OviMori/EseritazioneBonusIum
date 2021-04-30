@@ -43,7 +43,8 @@ class HomeActivity : AppCompatActivity() {
 
         setDatiUtenteCorrente()
 
-        binding.homeMainNome.text = "Benvenuto "+ DataRepository.getCurrentUser().username
+        binding.homeMainNome.text = "Benvenuto "+ viewModel.getCurrentUser()?.username
+
 
         binding.gestisciUtentiButton.setOnClickListener{
             val logoutIntent : Intent  = Intent(this, GestioneUtentiActivity::class.java)
@@ -67,13 +68,13 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setDatiUtenteCorrente(){
-        val currentUser = DataRepository.getCurrentUser()
+        val currentUser = viewModel.getCurrentUser()
 
         Log.i("UtenteCorrente:::::::::::::::::::", ""+currentUser.toString())
 
-        binding.homeUsername.setText(currentUser.username)
-        binding.homePassword.setText(currentUser.password)
-        binding.homeCitta.setText(currentUser.citta)
-        binding.homeDataNascita.setText(currentUser.dataNascita)
+        binding.homeUsername.setText(currentUser?.username)
+        binding.homePassword.setText(currentUser?.password)
+        binding.homeCitta.setText(currentUser?.citta)
+        binding.homeDataNascita.setText(currentUser?.dataNascita)
     }
 }

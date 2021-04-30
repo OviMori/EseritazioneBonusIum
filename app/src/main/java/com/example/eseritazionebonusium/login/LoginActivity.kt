@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
             openRegistrazioneActivity()
         }
 
-        binding.passwordEdit.addTextChangedListener(object : TextWatcher {
+        binding.inputLayoutPassword.editText?.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
 
@@ -39,19 +39,19 @@ class LoginActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.textInputLayout.setError(null)
+                binding.inputLayoutUsername.editText?.setError(null)
             }
         })
 
         binding.accediButton.setOnClickListener{
-            var usernameInserito = binding.usernameEdit.text.toString()
-            var passwordInserita = binding.passwordEdit.text.toString()
+            var usernameInserito = binding.inputLayoutUsername.editText?.text.toString()
+            var passwordInserita = binding.inputLayoutPassword.editText?.text.toString()
             if(verificaCredenziali(usernameInserito, passwordInserita)){
                 openHomeActivity()
             }else{
 //                binding.textInputLayout.isEndIconVisible = false
-                binding.usernameEdit.setError("Le credenziali non sono corrette!")
-                binding.passwordEdit.setError("Le credenziali non sono corrette!")
+                binding.inputLayoutUsername.editText?.setError("Le credenziali non sono corrette!")
+                binding.inputLayoutPassword.editText?.setError("Le credenziali non sono corrette!")
             }
         }
 
@@ -60,8 +60,8 @@ class LoginActivity : AppCompatActivity() {
     private fun verificaCredenziali(username: String, password: String) : Boolean {
         when (viewModel.doLogin(username, password)) {
             UserViewModelLogIn.LoginResult.USER_LOGGED -> return true
-            UserViewModelLogIn.LoginResult.USER_NOT_FOUND -> binding.usernameEdit.setError("Questo account non esiste!")
-            UserViewModelLogIn.LoginResult.WRONG_PASSWORD -> binding.passwordEdit.setError("Password errata!")
+            UserViewModelLogIn.LoginResult.USER_NOT_FOUND -> binding.inputLayoutUsername.editText?.setError("Questo account non esiste!")
+            UserViewModelLogIn.LoginResult.WRONG_PASSWORD -> binding.inputLayoutPassword.editText?.setError("Password errata!")
         }
         return false
     }

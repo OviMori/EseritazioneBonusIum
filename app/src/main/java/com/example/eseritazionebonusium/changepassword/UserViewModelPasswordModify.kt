@@ -8,29 +8,21 @@ import com.example.eseritazionebonusium.User
 class UserViewModelPasswordModify : ViewModel() {
 
     private var userList = DataRepository.getUsersList() as MutableList<User>
-    private val userListLiveData = MutableLiveData<List<User>>(userList)
-    private var isAdmin = false        //true if admin login
+    private val userListLiveData = MutableLiveData<List<User>>()
 
-
-    fun checkUserList(): MutableLiveData<List<User>> {
-        return userListLiveData
+    init {
+        userListLiveData.value = userList   //necessario, non funzionava nuovamente l assegnamento nella dichiarazione
     }
 
-    fun getUserList(): List<User> {
-        return userList
-    }
-
-    val isAnAdmin get() = isAdmin
-
-    fun getCurrentUser(): User {
+    fun getCurrentUser(): User? {
         return DataRepository.getCurrentUser()
     }
 
     fun aggiornaDatiUtente(newPassword: String): Boolean {
-        val currentUser = DataRepository.getCurrentUser()
+        val currentUser = DataRepository.getCurrentUser() ?: return false
 
-        if (!currentUser.username.equals("admin")) {  //if is not the admin account
-            DataRepository.salvaCambioPassword(newPassword)
+        if (!DataRepository.isAdmin(currentUser)) {  //if is not the admin account
+            DataRepository.saveNewPassword(newPassword)
             return true
         } else {
             return false
@@ -40,60 +32,29 @@ class UserViewModelPasswordModify : ViewModel() {
     /**
      * True se le due stringe passate come parametro sono uguali, false altrimenti
      */
-    fun verificaUguaglianzaPasswordInserite(password: String, confermaPassword: String): Boolean {
+    fun passwordsFitTogether(password: String, confermaPassword: String): Boolean {
         return password.equals(confermaPassword)
     }
 
     /**
      * Controlla se le credenziali sono gia presenti nel sistema, se non sono presenti restituisce un utente
      */
-    fun verificaCredenziali(
+    fun checkCredential(
             username: String,
             password: String,
-            citta: String,
-            dataNascita: String
+            city: String,
+            birth: String
     ): User? {
-        val utente = DataRepository.getUser(username)
 
-        if (utente.username.equals("admin")) {    //can not create user with "admin" username
-            return null
-        }
+        if (username.equals("admin")) return null //cannot create user with "admin" username
 
-        if (!utente.username.equals("")) {   //if username already exist
-            return null;
-        } else {
-            val createUtente = User(username, password, citta, dataNascita)
-            return createUtente
-        }
-    }
+        val user = DataRepository.getUser(username)
 
-    fun verificaCredenzialiAccesso(username: String, password: String): Int {
-        val userExist = DataRepository.getUser(username)
-
-        if (!userExist.username.equals("")) {    //if user exixst
-            if (userExist.password.equals(password)) {    //if password is equal to saved login
-                DataRepository.salvaUtenteCorrente(userExist)  //save current user in sharedPreferences
-                saveStatusIfAdmin(userExist)
-                return 0;
-
-            } else { //if pawwsord is wrong
-                return -2
+        return when {
+            User.isValid(user) == User.UserReturnType.USER_OK -> null
+            else -> {
+                return User(username, password, city, birth)
             }
-
-        } else {  //if user does not exist
-            return -1
         }
-    }
-
-    private fun saveStatusIfAdmin(user: User) {
-        isAdmin = user.admin == 1
-    }
-
-    /**
-     * @arrayCredenziali array che puo essere o di username o di password
-     * @macroTipoCredenziali indica se l array contiene serie di username o di password
-     */
-    fun salvaCredenziali(newUser: User) {
-        DataRepository.salvaUtente(newUser)
     }
 }

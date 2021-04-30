@@ -15,7 +15,7 @@ class UserViewModelLogIn : ViewModel() {
         return when {
             user == null -> LoginResult.USER_NOT_FOUND
             user.password.equals(password) -> {
-                DataRepository.salvaUtenteCorrente(user)  //save current user in sharedPreferences
+                DataRepository.saveCurrentUser(user)  //save current user in sharedPreferences
                 saveStatusIfAdmin(user)
                 LoginResult.USER_LOGGED
             }

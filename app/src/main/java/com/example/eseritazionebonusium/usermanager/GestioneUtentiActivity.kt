@@ -18,11 +18,12 @@ import com.example.eseritazionebonusium.home.HomeActivity
 import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.User
 import com.example.eseritazionebonusium.databinding.ActivityGestisciUtentiBinding
-import com.example.eseritazionebonusium.vm.UserViewModelUserListManager
 
 class GestioneUtentiActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGestisciUtentiBinding
+    private lateinit var model: UserViewModelUserListManager
+
 
     private lateinit var mRecyclerView: RecyclerView
     private lateinit var mLayoutManager: LinearLayoutManager
@@ -33,8 +34,8 @@ class GestioneUtentiActivity : AppCompatActivity() {
         val user = it.tag as User
 
         when (it.id) {
-            R.id.admin_management_row_button -> modificaStatusUtente(user)
-            R.id.cancella_utente_button -> cancellaUtente(user)
+            R.id.admin_management_row_button -> userStatusLayoutManager(user)
+            R.id.cancella_utente_button -> deleteUserLayoutManager(user)
         }
     }
 
@@ -42,7 +43,7 @@ class GestioneUtentiActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_gestisci_utenti)
 
-        val model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelUserListManager::class.java)
+        model = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory()).get(UserViewModelUserListManager::class.java)
 
 
         userList = DataRepository.getUsersList()    //get the list of all users
@@ -76,59 +77,13 @@ class GestioneUtentiActivity : AppCompatActivity() {
         })
     }
 
-    fun modificaStatusUtente(selectedUser: User): Boolean {
-        if (DataRepository.userExist(selectedUser.username)) {
-            if (!selectedUser.isAdmin) {
-                DataRepository.setAdmin(selectedUser)
-                Toast.makeText(this, "" + selectedUser.username + " is now admin.", Toast.LENGTH_SHORT).show()
-                mAdapter.updateList(DataRepository.getUsersList())
-                return true
-            } else {
-                return false
-            }
-        } else {
-            return false
-        }
-    }
-
-    fun cancellaUtente(elementoDaEliminare: User): Boolean {
-        if (!checkifIsCurrentAdmin(elementoDaEliminare)) {
-            if (!elementoDaEliminare.isAdmin) {
-                if (!DataRepository.dropUser(elementoDaEliminare)) {    //if username does not existi in sharedPreferences
-                    Log.i("cancellaUtente", "L username non ha trovato corrispondenze nelle sharedPreferences")
-                    return false
-                } else {
-                    Toast.makeText(this, "" + elementoDaEliminare.username + " deleted", Toast.LENGTH_SHORT).show()
-                    mAdapter.updateList(DataRepository.getUsersList())
-                    return true
-                }
-            } else {
-                Toast.makeText(this, "Cannot delete another Admin", Toast.LENGTH_SHORT).show()
-                return false
-            }
-
-        } else {
-            Toast.makeText(this, "Admin cannot delete himself", Toast.LENGTH_SHORT).show()
-            return false
-        }
-    }
-
-    fun checkifIsCurrentAdmin(selectedUser: User): Boolean {
-        val currentUser: User = DataRepository.getCurrentUser()
-
-        if (currentUser.toString().equals(selectedUser.toString())) { //if is the same user
-            return true
-        }
-        return false
-    }
-
-    fun filter(str: String){
-        val searchList :MutableList<User> = ArrayList()
+    fun filter(str: String) {
+        val searchList: MutableList<User> = ArrayList()
 
         userList = DataRepository.getUsersList()
 
-        for(elem in userList){
-            if(elem.username.contains(str)){ ///if contains text
+        for (elem in userList) {
+            if (elem.username.contains(str)) { ///if contains text
                 Log.i("Contenuto elemento in filter  ", elem.username)
                 searchList.add(elem)
             }
@@ -136,11 +91,36 @@ class GestioneUtentiActivity : AppCompatActivity() {
         mAdapter.updateList(searchList)
     }
 
+    fun userStatusLayoutManager(user: User) {
+        when (model.modifyUserStatus(user)) {
+            UserViewModelUserListManager.VMListManagerReturnType.NOT_EXIST -> Log.i("userStatusLayoutManager", "return value NOT_EXIST")
+            UserViewModelUserListManager.VMListManagerReturnType.ALREADY_ADMIN -> {
+                Toast.makeText(this, user.username + "is already admin!", Toast.LENGTH_SHORT)
+            }
+            UserViewModelUserListManager.VMListManagerReturnType.ADMIN_OK -> {
+                Toast.makeText(this, "" + user.username + " is now admin.", Toast.LENGTH_SHORT).show()
+                mAdapter.updateList(DataRepository.getUsersList())
+            }
+            else -> Log.i("userStatusLayoutManager", "Unexpected return value")
+        }
+    }
 
+    fun deleteUserLayoutManager(user: User) {
+        when (model.deleteUser(user)) {
+            UserViewModelUserListManager.VMListManagerReturnType.SELF_DELET_ERROR -> Toast.makeText(this, "Admin cannot delete himself", Toast.LENGTH_SHORT).show()
+            UserViewModelUserListManager.VMListManagerReturnType.CANNOT_DELETE_ADMIN -> Toast.makeText(this, "Cannot delete another Admin", Toast.LENGTH_SHORT).show()
+            UserViewModelUserListManager.VMListManagerReturnType.NOT_EXIST -> Log.i("userStatusLayoutManager", "L username non ha trovato corrispondenze nelle sharedPreferences")
+            UserViewModelUserListManager.VMListManagerReturnType.DELETE_OK -> {
+                Toast.makeText(this, "" + user.username + " deleted", Toast.LENGTH_SHORT).show()
+                mAdapter.updateList(DataRepository.getUsersList())
+            }
+            else -> Log.i("userStatusLayoutManager", "Unexpected return value")
+        }
+    }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        val homeActivityIntent : Intent = Intent(this, HomeActivity::class.java)
+        val homeActivityIntent: Intent = Intent(this, HomeActivity::class.java)
         homeActivityIntent.putExtra("ISANADMIN", 1)
         startActivity(homeActivityIntent)
         finish()

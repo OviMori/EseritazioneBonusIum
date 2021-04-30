@@ -22,22 +22,17 @@
             android:textColor="@color/black"
             android:textSize="30dp" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="16dp" />
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/username_input"
+                android:id="@+id/input_layout_username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 app:errorEnabled="true">
 
                 <EditText
-                    android:id="@+id/username_edit"
+                    android:id="@+id/input_layout_username_edit"
                     style="@style/MyEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -48,7 +43,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_layout"
+                android:id="@+id/input_layout_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/enter_your_password"
@@ -56,7 +51,7 @@
                 app:endIconMode="password_toggle">
 
                 <EditText
-                    android:id="@+id/password_edit"
+                    android:id="@+id/input_layout_password_edit"
                     style="@style/MyEditTextStyle.Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -66,22 +61,17 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical"
-            android:gravity="center">
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/accedi_button"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:background="@color/my_green"
                 android:layout_width="wrap_content"
-                android:gravity="center"
+                android:layout_marginTop="60dp"
+                android:layout_gravity="center"
                 android:layout_height="35dp"
                 android:ems="18"
-                android:layout_marginTop="30dp"
                 android:textStyle="bold"
                 android:text="@string/accedi"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -94,6 +84,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
+                android:layout_gravity="center"
                 android:text="@string/nuovo_utente_registrati"
                 android:textColor="@color/my_green"
                 android:linksClickable="true"
@@ -101,6 +92,5 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/accedi_button" />
-        </LinearLayout>
     </LinearLayout>
 </layout>
