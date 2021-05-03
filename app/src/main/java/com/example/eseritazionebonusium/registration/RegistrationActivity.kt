@@ -14,7 +14,7 @@ import com.example.eseritazionebonusium.databinding.ActivityRegistrazioneBinding
 import com.example.eseritazionebonusium.login.LoginActivity
 import java.util.*
 
-class RergistrationActivity : AppCompatActivity() {
+class RegistrationActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegistrazioneBinding
     private lateinit var model: UserViewModelRegistration

@@ -9,7 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.eseritazionebonusium.home.HomeActivity
 import com.example.eseritazionebonusium.R
-import com.example.eseritazionebonusium.registration.RergistrationActivity
+import com.example.eseritazionebonusium.registration.RegistrationActivity
 import com.example.eseritazionebonusium.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
@@ -27,7 +27,7 @@ class LoginActivity : AppCompatActivity() {
         ).get(UserViewModelLogIn::class.java)
 
         binding.registrazioneButton.setOnClickListener{
-            openRegistrazioneActivity()
+            openRegistrationActivity()
         }
 
         binding.inputLayoutPassword.editText?.addTextChangedListener(object : TextWatcher {
@@ -43,10 +43,10 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        binding.accediButton.setOnClickListener{
-            var usernameInserito = binding.inputLayoutUsername.editText?.text.toString()
-            var passwordInserita = binding.inputLayoutPassword.editText?.text.toString()
-            if(verificaCredenziali(usernameInserito, passwordInserita)){
+        binding.accessButton.setOnClickListener{
+            var usernameInput = binding.inputLayoutUsername.editText?.text.toString()
+            var passwordInput = binding.inputLayoutPassword.editText?.text.toString()
+            if(checkCredentials(usernameInput, passwordInput)){
                 openHomeActivity()
             }else{
 //                binding.textInputLayout.isEndIconVisible = false
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun verificaCredenziali(username: String, password: String) : Boolean {
+    private fun checkCredentials(username: String, password: String) : Boolean {
         when (viewModel.doLogin(username, password)) {
             UserViewModelLogIn.LoginResult.USER_LOGGED -> return true
             UserViewModelLogIn.LoginResult.USER_NOT_FOUND -> binding.inputLayoutUsername.editText?.setError("Questo account non esiste!")
@@ -78,9 +78,9 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun openRegistrazioneActivity(){
-        val registrazioneIntent = Intent(this, RergistrationActivity::class.java)
-        startActivity(registrazioneIntent)
+    private fun openRegistrationActivity(){
+        val toRegistrationIntent = Intent(this, RegistrationActivity::class.java)
+        startActivity(toRegistrationIntent)
         finish()
     }
 }

@@ -64,7 +64,7 @@
 
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/accedi_button"
+                android:id="@+id/access_button"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:background="@color/my_green"
                 android:layout_width="wrap_content"
