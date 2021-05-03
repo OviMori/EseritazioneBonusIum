@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="30dp"
@@ -79,7 +78,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/password_edit"/>
 
             <TextView
-                android:id="@+id/registrazione_button"
+                android:id="@+id/registration_button"
                 android:clickable="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -91,6 +90,6 @@
                 android:textSize="15dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/accedi_button" />
+                app:layout_constraintTop_toBottomOf="@id/access_button" />
     </LinearLayout>
 </layout>

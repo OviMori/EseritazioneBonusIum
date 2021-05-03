@@ -19,7 +19,7 @@ import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.User
 import com.example.eseritazionebonusium.databinding.ActivityGestisciUtentiBinding
 
-class GestioneUtentiActivity : AppCompatActivity() {
+class UserManagerActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGestisciUtentiBinding
     private lateinit var model: UserViewModelUserListManager

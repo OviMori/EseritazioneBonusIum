@@ -101,7 +101,7 @@ object DataRepository {
     }
 
     private fun saveCredential(newUser: User) {
-        Log.i("InfoUtenteRegistrato", newUser.toString())
+        Log.i("InfoUserRegistered", newUser.toString())
         if(User.isValid(newUser) == User.UserReturnType.USER_OK){
             sharPrefUsers.edit().putString(newUser.username, newUser.toString()).apply()
         }

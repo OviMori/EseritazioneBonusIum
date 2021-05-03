@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.eseritazionebonusium.DataRepository
-import com.example.eseritazionebonusium.home.HomeActivity
 import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.databinding.ActivityModificaPasswordBinding
+import com.example.eseritazionebonusium.home.HomeActivity
 
-class ModificaPasswordActivity : AppCompatActivity() {
+class ModifyPasswordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityModificaPasswordBinding
     private lateinit var viewModel: UserViewModelPasswordModify
@@ -28,12 +28,12 @@ class ModificaPasswordActivity : AppCompatActivity() {
         setCurrentUserData()
 
         binding.tornaHomeButton.setOnClickListener {
-            val homeIntent: Intent = Intent(this, HomeActivity::class.java)
-            startActivity(homeIntent)
+            val toHomeIntent = Intent(this, HomeActivity::class.java)
+            startActivity(toHomeIntent)
             finish()
         }
 
-        binding.aggiornaPasswordButton.setOnClickListener {
+        binding.updatePasswordButton.setOnClickListener {
             val newPassword: String = binding.passwordEdit.text.toString()
             val newPasswordConferma : String = binding.passwordEditConfirm.text.toString()
 
@@ -48,7 +48,7 @@ class ModificaPasswordActivity : AppCompatActivity() {
 
             }else{
                 binding.textInputLayoutModifyPassword.isEndIconVisible = false
-                binding.passwordEdit.setError("Le password inserite non corrispondono!")
+                binding.passwordEdit.setError("The passwords entered do not match!")
             }
         }
     }
@@ -61,21 +61,6 @@ class ModificaPasswordActivity : AppCompatActivity() {
         }
         return true
     }
-
-    //TODO(Change datarepository call to to ViewModelCall)
-    fun aggiornaDatiUtente( newPassword : String){
-        val currentUser = DataRepository.getCurrentUser()
-
-        if(currentUser != null){
-            if(!currentUser.username.equals("admin")){  //if is not the admin account
-                DataRepository.saveNewPassword(newPassword)
-            }else{
-                Toast.makeText(this, "Cannot modify admin credential", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    }
-
 
     private fun setCurrentUserData(){
         val user = viewModel.getCurrentUser()

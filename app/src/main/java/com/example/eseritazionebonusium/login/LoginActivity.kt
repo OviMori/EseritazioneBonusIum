@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
             ViewModelProvider.NewInstanceFactory()
         ).get(UserViewModelLogIn::class.java)
 
-        binding.registrazioneButton.setOnClickListener{
+        binding.registrationButton.setOnClickListener{
             openRegistrationActivity()
         }
 

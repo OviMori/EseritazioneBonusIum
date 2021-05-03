@@ -8,11 +8,10 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.eseritazionebonusium.DataRepository
 import com.example.eseritazionebonusium.R
-import com.example.eseritazionebonusium.changepassword.ModificaPasswordActivity
+import com.example.eseritazionebonusium.changepassword.ModifyPasswordActivity
 import com.example.eseritazionebonusium.databinding.ActivityHomeBinding
-import com.example.eseritazionebonusium.usermanager.GestioneUtentiActivity
+import com.example.eseritazionebonusium.usermanager.UserManagerActivity
 import com.example.eseritazionebonusium.login.LoginActivity
 
 class HomeActivity : AppCompatActivity() {
@@ -34,27 +33,27 @@ class HomeActivity : AppCompatActivity() {
         if(viewModel.isAnAdmin){
             //mostra layout admin
             binding.adminIconLayout.visibility = View.VISIBLE
-            binding.gestisciUtentiButton.visibility = View.VISIBLE
+            binding.userManagerButton.visibility = View.VISIBLE
         }else{
             //nascondi layout admin
             binding.adminIconLayout.visibility = View.GONE
-            binding.gestisciUtentiButton.visibility = View.GONE
+            binding.userManagerButton.visibility = View.GONE
         }
 
-        setDatiUtenteCorrente()
+        setCurrentUserDate()
 
-        binding.homeMainNome.text = "Benvenuto "+ viewModel.getCurrentUser()?.username
+        binding.homeTopName.text = "Welcome "+ viewModel.getCurrentUser()?.username
 
 
-        binding.gestisciUtentiButton.setOnClickListener{
-            val logoutIntent : Intent  = Intent(this, GestioneUtentiActivity::class.java)
-            startActivity(logoutIntent)
+        binding.userManagerButton.setOnClickListener{
+            val toUsersManagerActivity  = Intent(this, UserManagerActivity::class.java)
+            startActivity(toUsersManagerActivity)
             finish()
         }
 
 
-        binding.modificaPasswordButton.setOnClickListener{
-            val logoutIntent : Intent  = Intent(this, ModificaPasswordActivity::class.java)
+        binding.modifyPasswordButton.setOnClickListener{
+            val logoutIntent = Intent(this, ModifyPasswordActivity::class.java)
             startActivity(logoutIntent)
             finish()
         }
@@ -67,14 +66,14 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
-    private fun setDatiUtenteCorrente(){
+    private fun setCurrentUserDate(){
         val currentUser = viewModel.getCurrentUser()
 
-        Log.i("UtenteCorrente:::::::::::::::::::", ""+currentUser.toString())
+        Log.i("Current User: ", currentUser.toString())
 
         binding.homeUsername.setText(currentUser?.username)
         binding.homePassword.setText(currentUser?.password)
-        binding.homeCitta.setText(currentUser?.citta)
+        binding.homeCity.setText(currentUser?.city)
         binding.homeDataNascita.setText(currentUser?.dataNascita)
     }
 }

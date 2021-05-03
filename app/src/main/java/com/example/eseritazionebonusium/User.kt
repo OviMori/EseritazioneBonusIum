@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder
 data class User(
         var username: String = "",
         var password: String = "",
-        var citta: String = "",
+        var city: String = "",
         var dataNascita: String = "",
         var eliminare: Boolean = false,
         var admin: Int = 0
