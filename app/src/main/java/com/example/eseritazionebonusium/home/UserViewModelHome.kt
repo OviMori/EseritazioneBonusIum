@@ -1,13 +1,17 @@
 package com.example.eseritazionebonusium.home
 
+import android.provider.ContactsContract
 import androidx.lifecycle.ViewModel
 import com.example.eseritazionebonusium.DataRepository
 import com.example.eseritazionebonusium.User
 
 class UserViewModelHome : ViewModel() {
-    private var isAdmin = false        //true if admin login
+    var isAdmin = false        //true if admin login
 
-    val isAnAdmin get() = isAdmin
+    init{
+        val currentUser = DataRepository.getCurrentUser()
+        isAdmin = currentUser != null && DataRepository.isAdmin(currentUser)
+    }
 
     fun getCurrentUser() : User?{
         return DataRepository.getCurrentUser()

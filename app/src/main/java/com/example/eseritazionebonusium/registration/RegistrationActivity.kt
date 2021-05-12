@@ -28,7 +28,7 @@ class RegistrationActivity : AppCompatActivity() {
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registrazione)
 
-        binding.layoutInputBirth.setOnClickListener {
+        binding.layoutInputBirthEdit.setOnClickListener {
             showDataPicker()
         }
 

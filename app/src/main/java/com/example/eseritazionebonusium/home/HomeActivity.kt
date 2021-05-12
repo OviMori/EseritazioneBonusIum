@@ -30,7 +30,7 @@ class HomeActivity : AppCompatActivity() {
 
 
 
-        if(viewModel.isAnAdmin){
+        if(viewModel.isAdmin){
             //mostra layout admin
             binding.adminIconLayout.visibility = View.VISIBLE
             binding.userManagerButton.visibility = View.VISIBLE

@@ -3,6 +3,7 @@ package com.example.eseritazionebonusium
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import com.google.gson.Gson
 
 object DataRepository {
     private const val MY_SHARED_PREF_UTENTI = "INFO_UTENTI"
@@ -17,6 +18,17 @@ object DataRepository {
         sharPrefUsers = context.getSharedPreferences(MY_SHARED_PREF_UTENTI, Context.MODE_PRIVATE)
         sharPrefMyUser = context.getSharedPreferences(MY_SHARED_PREF_UTENTE_CORRENTE, Context.MODE_PRIVATE)
         verifyAdminAccount()
+    }
+
+    fun toStringGson(user: User): String {
+        val gson: Gson = Gson()
+        return  gson.toJson(user)   //converto user in gson
+    }
+
+    fun fromStringGson(gsonUser: String): User?{
+        val gson = Gson()
+        return gson.fromJson(gsonUser, User::class.java)
+
     }
 
     private fun verifyAdminAccount() {
