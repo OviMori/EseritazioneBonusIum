@@ -56,7 +56,7 @@ class UserViewModelUserListManager : ViewModel() {
     fun checkifIsCurrentUser(selectedUser: User): Boolean {
         val currentUser: User? = DataRepository.getCurrentUser()
 
-        if (currentUser.toString().equals(selectedUser.toString())) { //if is the same user
+        if (currentUser != null && DataRepository.compareUsers(currentUser, selectedUser)) { //if is the same user
             return true
         }
         return false

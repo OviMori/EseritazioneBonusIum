@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
+import java.util.*
+import kotlin.collections.ArrayList
 
 object DataRepository {
     private const val MY_SHARED_PREF_UTENTI = "INFO_UTENTI"
@@ -23,6 +25,17 @@ object DataRepository {
     fun toStringGson(user: User): String {
         val gson: Gson = Gson()
         return  gson.toJson(user)   //converto user in gson
+    }
+
+    fun compareUsers(user1: User, user2: User): Boolean{
+        return user1.equals(user2)
+    }
+
+    fun equals(obj: Objects): Boolean{
+        val gson = Gson()
+        val strusr1 = gson.toJson(this)
+        val strusr2 = gson.toJson(obj as User)
+        return strusr1.equals(strusr2)
     }
 
     fun fromStringGson(gsonUser: String): User?{
@@ -64,7 +77,7 @@ object DataRepository {
         var userList: ArrayList<User> = ArrayList()
 
         for (user in sharPrefUsers.all) {
-            val tempUser = User.fromString(user.value.toString())   //create new user
+            val tempUser = fromStringGson(user.value.toString())   //create new user
 
             if (tempUser != null && User.isValid(tempUser) == User.UserReturnType.USER_OK)
                 userList.add(tempUser)
@@ -85,22 +98,8 @@ object DataRepository {
         return sharPrefUsers.getString(user.username, null) != null
     }
 
-    fun saveCurrentUser(currentUser: User) {
-        Log.i("Current user saved: ", currentUser.toString())
-        sharPrefMyUser.edit().putString(UTENTE_CORRENTE_KEY, currentUser.toString()).apply()
-    }
-
     fun saveUser(newUser: User) {
         saveCredential(newUser)
-    }
-
-    fun getCurrentUser(): User? {
-        return User.fromString(sharPrefMyUser.getString(UTENTE_CORRENTE_KEY, null))
-    }
-
-    fun getUser(username: String): User? {
-        val utenteInString = sharPrefUsers.getString(username, null)
-        return User.fromString(utenteInString)
     }
 
     fun createAdminAccount() {
@@ -112,10 +111,26 @@ object DataRepository {
         return sharPrefUsers.getString("admin", null) != null
     }
 
+    fun getCurrentUser(): User? {
+        return sharPrefMyUser.getString(UTENTE_CORRENTE_KEY, null)?.let { fromStringGson(it) }
+    }
+
+    fun saveCurrentUser(currentUser: User) {
+        Log.i("Current user saved: ", currentUser.toString())
+        val gsonString = toStringGson(currentUser)
+        sharPrefMyUser.edit().putString(UTENTE_CORRENTE_KEY, gsonString).apply()
+    }
+
+    fun getUser(username: String): User? {
+        return sharPrefUsers.getString(username, null)
+            .let { it?.let { it1 -> fromStringGson(it1) } }
+    }
+
     private fun saveCredential(newUser: User) {
         Log.i("InfoUserRegistered", newUser.toString())
-        if(User.isValid(newUser) == User.UserReturnType.USER_OK){
-            sharPrefUsers.edit().putString(newUser.username, newUser.toString()).apply()
+        if (User.isValid(newUser) == User.UserReturnType.USER_OK) {
+            val gsonString = toStringGson(newUser)
+            sharPrefUsers.edit().putString(newUser.username, gsonString).apply()
         }
     }
 
