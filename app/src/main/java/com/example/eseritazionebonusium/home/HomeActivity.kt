@@ -74,6 +74,6 @@ class HomeActivity : AppCompatActivity() {
         binding.homeUsername.setText(currentUser?.username)
         binding.homePassword.setText(currentUser?.password)
         binding.homeCity.setText(currentUser?.city)
-        binding.homeDataNascita.setText(currentUser?.dataNascita)
+        binding.homeDataNascita.setText(currentUser?.birth)
     }
 }

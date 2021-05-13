@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -23,8 +24,8 @@ object DataRepository {
     }
 
     fun toStringGson(user: User): String {
-        val gson: Gson = Gson()
-        return  gson.toJson(user)   //converto user in gson
+        val gson = Gson()
+        return  gson.toJson(UserGson(user.username, user.password, user.city, user.birth, user.eliminare, user.admin))   //convert user in gson
     }
 
     fun compareUsers(user1: User, user2: User): Boolean{
@@ -40,7 +41,9 @@ object DataRepository {
 
     fun fromStringGson(gsonUser: String): User?{
         val gson = Gson()
-        return gson.fromJson(gsonUser, User::class.java)
+        val gu = gson.fromJson(gsonUser, UserGson::class.java)
+        return User(gu.username, gu.password, gu.city, gu.birth, gu.eliminare, gu.admin)
+
 
     }
 
@@ -130,6 +133,7 @@ object DataRepository {
         Log.i("InfoUserRegistered", newUser.toString())
         if (User.isValid(newUser) == User.UserReturnType.USER_OK) {
             val gsonString = toStringGson(newUser)
+            Log.i("saveCredential", gsonString)
             sharPrefUsers.edit().putString(newUser.username, gsonString).apply()
         }
     }

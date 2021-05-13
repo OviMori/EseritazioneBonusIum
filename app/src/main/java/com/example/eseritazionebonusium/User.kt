@@ -1,19 +1,19 @@
 package com.example.eseritazionebonusium
 
 data class User(
-        var username: String = "",
-        var password: String = "",
-        var city: String = "",
-        var dataNascita: String = "",
-        var eliminare: Boolean = false,
-        var admin: Int = 0
+    var username: String = "",
+    var password: String = "",
+    var city: String = "",
+    var birth: String = "",
+    var eliminare: Boolean = false,
+    var admin: Int = 0
 ) : HashSet<String>() {
 
 
     val isAdmin: Boolean get() = admin == 1
 
     override fun toString(): String {
-        return "" + this.username + "*" + this.password + "*" + this.city + "*" + this.dataNascita + "*" + this.eliminare + "*" + this.admin
+        return "" + this.username + "*" + this.password + "*" + this.city + "*" + this.birth + "*" + this.eliminare + "*" + this.admin
     }
 
     companion object {
@@ -29,7 +29,7 @@ data class User(
                 user.username = strArrUser[0]
                 user.password = strArrUser[1]
                 user.city = strArrUser[2]
-                user.dataNascita = strArrUser[3]
+                user.birth = strArrUser[3]
 
                 if (strArrUser[4] == "true") {
                     user.eliminare = true
