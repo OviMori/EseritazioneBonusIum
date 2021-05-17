@@ -53,10 +53,9 @@ class ModifyPasswordActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        super.onBackPressed()
         val toHomeIntent = Intent(this, HomeActivity::class.java)
         toHomeIntent.putExtra("ISANADMIN", 1)
-        startActivity(intent)
+        startActivity(toHomeIntent)
         finish()
     }
 
