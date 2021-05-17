@@ -18,12 +18,12 @@
 
             <TextView
                 android:id="@+id/login_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:elegantTextHeight="true"
-                android:gravity="center"
-                android:text="Registrazione"
+                android:layout_gravity="center"
+                android:text="@string/sing_up"
                 android:textColor="@color/black"
                 android:textSize="30dp" />
 
@@ -76,7 +76,7 @@
                     style="@style/MyEditTextStyle.Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Conferma password" />
+                    android:hint="Confirm password" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,7 +92,7 @@
                     style="@style/MyEditTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Citta di provenienza" />
+                    android:hint="City" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -109,7 +109,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:focusableInTouchMode="false"
-                    android:hint="Data di nascita" />
+                    android:hint="Age" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,8 +122,8 @@
                 android:layout_marginTop="30dp"
                 android:background="@color/my_green"
                 android:ems="18"
-                android:gravity="center"
-                android:text="@string/registrati"
+                android:layout_gravity="center"
+                android:text="@string/sing_up"
                 android:textStyle="bold" />
 
 

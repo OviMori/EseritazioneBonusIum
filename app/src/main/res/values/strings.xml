@@ -1,17 +1,21 @@
 <resources>
     <string name="app_name">App Bonus</string>
-    <string name="accedi">Accedi</string>
-    <string name="nuovo_utente_registrati">Nuovo utente? Registrati</string>
+    <string name="login">Login</string>
+    <string name="new_user_sing_up">New user? Sing Up</string>
     <string name="enter_your_password">Enter your password</string>
-    <string name="error_messagge_not_equals_password">Inserisci la stessa password</string>
-    <string name="error_messagge_wrong_username">Username errato</string>
-    <string name="error_messagge_wrong_password">Password errata</string>
-    <string name="registrati">Registrati</string>
-    <string name="i_tuoi_dati">I tuoi dati:</string>
+    <string name="error_messagge_not_equals_password">Passwords do not match</string>
+    <string name="error_messagge_wrong_username">Wrong username!</string>
+    <string name="error_messagge_wrong_password">Wrong password!</string>
+    <string name="sing_up">Sing Up</string>
+    <string name="personal_information">Personal information:</string>
     <string name="username">Username:</string>
     <string name="enter_your_username">Enter your username</string>
-    <string name="nuova_password">Nuova password</string>
-    <string name="conferma_password">Conferma password</string>
+    <string name="new_password">New password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="city">City:</string>
+    <string name="age">Age:</string>
+    <string name="manage_users">Manage users</string>
+    <string name="change_password">Change password</string>
 
 
 </resources>

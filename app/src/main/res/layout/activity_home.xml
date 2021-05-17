@@ -35,7 +35,7 @@
                     android:gravity="center"
                     android:layout_marginTop="10dp"
                     android:elegantTextHeight="true"
-                    android:text="Benvenuto Marco!"
+                    android:text="Welcome Marco!"
                     android:textColor="@color/black"
                     android:textSize="20dp" />
 
@@ -82,7 +82,7 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
                     android:elegantTextHeight="true"
-                    android:text="@string/i_tuoi_dati"
+                    android:text="@string/personal_information"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:textSize="20sp" />
@@ -153,9 +153,9 @@
                         android:ems="7"
                         android:layout_marginTop="10dp"
                         android:elegantTextHeight="true"
-                        android:text="Citta: "
+                        android:text="@string/city"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                     <TextView
                         android:id="@+id/home_city"
@@ -165,7 +165,7 @@
                         android:layout_marginTop="10dp"
                         android:elegantTextHeight="true"
                         android:textColor="@color/black"
-                        android:textSize="20dp" />
+                        android:textSize="20sp" />
 
                 </LinearLayout>
                 <LinearLayout
@@ -180,7 +180,7 @@
                         android:ems="7"
                         android:layout_marginTop="10dp"
                         android:elegantTextHeight="true"
-                        android:text="Data nascita: "
+                        android:text="@string/age"
                         android:textColor="@color/black"
                         android:textSize="20dp" />
 
@@ -215,7 +215,7 @@
                     android:ems="18"
                     android:layout_marginTop="30dp"
                     android:textStyle="bold"
-                    android:text="Gestisci utenti"
+                    android:text="@string/manage_users"
                     android:visibility="visible"/>
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -238,7 +238,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:layout_marginTop="15dp"
-                    android:text="Modifica password"
+                    android:text="@string/change_password"
                     android:textColor="@color/my_green"
                     android:linksClickable="true"
                     android:textSize="15dp" />

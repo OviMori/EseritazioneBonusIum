@@ -72,7 +72,7 @@
                 android:layout_height="35dp"
                 android:ems="18"
                 android:textStyle="bold"
-                android:text="@string/accedi"
+                android:text="@string/login"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password_edit"/>
@@ -84,7 +84,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:layout_gravity="center"
-                android:text="@string/nuovo_utente_registrati"
+                android:text="@string/new_user_sing_up"
                 android:textColor="@color/my_green"
                 android:linksClickable="true"
                 android:textSize="15dp"

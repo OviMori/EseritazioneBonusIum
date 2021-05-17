@@ -90,7 +90,6 @@ object DataRepository {
 
     fun saveNewPassword(newPassword: String) {
         val currentUser = getCurrentUser()  //necessary for 'null' controll
-        Log.i("chechUpdatePasswordFlow", "isValide return == ${User.isValid(currentUser) == User.UserReturnType.USER_OK}")
         if(currentUser != null && User.isValid(currentUser) == User.UserReturnType.USER_OK){
             currentUser.password = newPassword
             //change either current user credential and credential in the list of all users
@@ -131,10 +130,8 @@ object DataRepository {
     }
 
     private fun saveCredential(newUser: User) {
-        Log.i("InfoUserRegistered", newUser.toString())
         if (User.isValid(newUser) == User.UserReturnType.USER_OK) {
             val gsonString = toStringGson(newUser)
-            Log.i("saveCredential", gsonString)
             sharPrefUsers.edit().putString(newUser.username, gsonString).apply()
             saveCurrentUser(newUser)
         }

@@ -2,7 +2,6 @@ package com.example.eseritazionebonusium.changepassword
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -38,9 +37,7 @@ class ModifyPasswordActivity : AppCompatActivity() {
             val newPasswordConferma : String = binding.passwordEditConfirm.text.toString()
 
             if(viewModel.passwordsFitTogether(newPassword, newPasswordConferma)){
-                Log.i("chechUpdatePasswordFlow", "passwordsFitTogether == true")
                 if(checkMinInput(newPassword)){
-                    Log.i("chechUpdatePasswordFlow", "checkMinInput == true")
                     if(!viewModel.updateUserData(newPassword)){
                         Toast.makeText(this, "Cannot modify admin credential", Toast.LENGTH_SHORT).show()
                     }
@@ -48,15 +45,23 @@ class ModifyPasswordActivity : AppCompatActivity() {
                     Toast.makeText(this, " Password updated. ", Toast.LENGTH_SHORT).show()
                 }
 
-            }else{
+            } else {
                 binding.textInputLayoutModifyPassword.isEndIconVisible = false
                 binding.passwordEdit.setError("The passwords entered do not match!")
             }
         }
     }
 
-    fun checkMinInput(newPassword: String) : Boolean{
-        if(newPassword.trim().isBlank()){
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val toHomeIntent = Intent(this, HomeActivity::class.java)
+        toHomeIntent.putExtra("ISANADMIN", 1)
+        startActivity(intent)
+        finish()
+    }
+
+    fun checkMinInput(newPassword: String): Boolean {
+        if (newPassword.trim().isBlank()) {
             binding.textInputLayoutModifyPasswordConfirm.isEndIconVisible = false
             binding.passwordEdit.setError("Password cannot be blank! ")
             return false
@@ -67,8 +72,6 @@ class ModifyPasswordActivity : AppCompatActivity() {
     private fun setCurrentUserData(){
         val user = viewModel.getCurrentUser()
         if( user != null){
-            Log.i("chechUpdatePasswordFlow", "setCurrentUserData, user != null")
-            Log.i("chechUpdatePasswordFlow", "userdata ${user.toString()}")
             binding.modificaPasswordUsernameCorrente.setText(user.username)
             binding.modificaPasswordPasswordCorrente.setText(user.password)
         }
