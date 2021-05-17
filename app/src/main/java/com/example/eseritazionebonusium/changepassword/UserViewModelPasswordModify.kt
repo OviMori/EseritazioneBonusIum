@@ -1,5 +1,6 @@
 package com.example.eseritazionebonusium.changepassword
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.eseritazionebonusium.DataRepository
@@ -18,11 +19,14 @@ class UserViewModelPasswordModify : ViewModel() {
         return DataRepository.getCurrentUser()
     }
 
-    fun aggiornaDatiUtente(newPassword: String): Boolean {
+    fun updateUserData(newPassword: String): Boolean {
         val currentUser = DataRepository.getCurrentUser() ?: return false
+
+        Log.i("chechUpdatePasswordFlow", "currentUserData = ${currentUser.toString()}")
 
         if (!DataRepository.isAdmin(currentUser)) {  //if is not the admin account
             DataRepository.saveNewPassword(newPassword)
+            Log.i("chechUpdatePasswordFlow", "UpdateUserData, new password $newPassword");
             return true
         } else {
             return false

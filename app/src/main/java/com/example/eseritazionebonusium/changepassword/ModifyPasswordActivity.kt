@@ -2,11 +2,11 @@ package com.example.eseritazionebonusium.changepassword
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.eseritazionebonusium.DataRepository
 import com.example.eseritazionebonusium.R
 import com.example.eseritazionebonusium.databinding.ActivityModificaPasswordBinding
 import com.example.eseritazionebonusium.home.HomeActivity
@@ -38,8 +38,10 @@ class ModifyPasswordActivity : AppCompatActivity() {
             val newPasswordConferma : String = binding.passwordEditConfirm.text.toString()
 
             if(viewModel.passwordsFitTogether(newPassword, newPasswordConferma)){
+                Log.i("chechUpdatePasswordFlow", "passwordsFitTogether == true")
                 if(checkMinInput(newPassword)){
-                    if(!viewModel.aggiornaDatiUtente(newPassword)){
+                    Log.i("chechUpdatePasswordFlow", "checkMinInput == true")
+                    if(!viewModel.updateUserData(newPassword)){
                         Toast.makeText(this, "Cannot modify admin credential", Toast.LENGTH_SHORT).show()
                     }
                     setCurrentUserData()
@@ -65,6 +67,8 @@ class ModifyPasswordActivity : AppCompatActivity() {
     private fun setCurrentUserData(){
         val user = viewModel.getCurrentUser()
         if( user != null){
+            Log.i("chechUpdatePasswordFlow", "setCurrentUserData, user != null")
+            Log.i("chechUpdatePasswordFlow", "userdata ${user.toString()}")
             binding.modificaPasswordUsernameCorrente.setText(user.username)
             binding.modificaPasswordPasswordCorrente.setText(user.password)
         }

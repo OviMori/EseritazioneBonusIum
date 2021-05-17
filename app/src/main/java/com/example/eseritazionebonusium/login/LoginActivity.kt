@@ -7,10 +7,10 @@ import android.text.TextWatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.example.eseritazionebonusium.home.HomeActivity
 import com.example.eseritazionebonusium.R
-import com.example.eseritazionebonusium.registration.RegistrationActivity
 import com.example.eseritazionebonusium.databinding.ActivityLoginBinding
+import com.example.eseritazionebonusium.home.HomeActivity
+import com.example.eseritazionebonusium.registration.RegistrationActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -48,10 +48,10 @@ class LoginActivity : AppCompatActivity() {
             var passwordInput = binding.inputLayoutPassword.editText?.text.toString()
             if(checkCredentials(usernameInput, passwordInput)){
                 openHomeActivity()
-            }else{
-//                binding.textInputLayout.isEndIconVisible = false
-                binding.inputLayoutUsername.editText?.setError("Le credenziali non sono corrette!")
-                binding.inputLayoutPassword.editText?.setError("Le credenziali non sono corrette!")
+            }else {
+//                binding.inputLayoutPassword.isEndIconVisible = false
+                binding.inputLayoutUsername.editText?.setError("Wrong credential!")
+                binding.inputLayoutPassword.editText?.setError("Wrong credential!")
             }
         }
 
